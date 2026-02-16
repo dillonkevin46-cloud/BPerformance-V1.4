@@ -1,0 +1,17 @@
+# --- Core Framework ---
+Django>=4.2,<5.0
+
+# --- Imaging & PDF Generation ---
+Pillow>=10.0.0
+weasyprint>=60.0
+
+# --- Windows / IIS Deployment ---
+wfastcgi>=3.0.0
+tzdata  # Essential for timezone support on Windows
+
+# --- Database (PostgreSQL) ---
+# Uncomment the line below if you switch from SQLite to PostgreSQL in production
+# psycopg2-binary>=2.9
+
+# --- Utilities ---
+requests>=2.31.0

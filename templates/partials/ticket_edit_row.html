@@ -1,0 +1,108 @@
+<tr id="ticket-row-{{ ticket.id }}">
+    <td colspan="7">
+        <form hx-post="{% url 'htmx_save_ticket' ticket.id %}" 
+              hx-target="#ticket-row-{{ ticket.id }}" 
+              hx-swap="outerHTML" 
+              class="card card-body shadow-sm bg-light border-primary">
+            
+            <div class="row g-2 mb-2">
+                <div class="col-md-3">
+                    <label class="small fw-bold">Staff</label>
+                    <select name="staff" class="form-select form-select-sm">
+                        {% for s in staff_list %}
+                        <option value="{{ s.id }}" {% if s.id == ticket.staff.id %}selected{% endif %}>{{ s.full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small fw-bold">Work Type</label>
+                    <select name="work_type" class="form-select form-select-sm">
+                        <option value="INT" {% if ticket.work_type == 'INT' %}selected{% endif %}>Internal</option>
+                        <option value="EXT" {% if ticket.work_type == 'EXT' %}selected{% endif %}>External</option>
+                        <option value="REM" {% if ticket.work_type == 'REM' %}selected{% endif %}>Remote</option>
+                        <option value="ADM" {% if ticket.work_type == 'ADM' %}selected{% endif %}>Admin</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small fw-bold">Location</label>
+                    <select name="work_location" class="form-select form-select-sm">
+                        <option value="OFFICE" {% if ticket.work_location == 'OFFICE' %}selected{% endif %}>Office</option>
+                        <option value="HOME" {% if ticket.work_location == 'HOME' %}selected{% endif %}>Home</option>
+                        <option value="HYBRID" {% if ticket.work_location == 'HYBRID' %}selected{% endif %}>Hybrid</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small fw-bold">Status</label>
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="COMP" {% if ticket.status == 'COMP' %}selected{% endif %}>Completed</option>
+                        <option value="BLOCK" {% if ticket.status == 'BLOCK' %}selected{% endif %}>Blocker</option>
+                        <option value="PEND" {% if ticket.status == 'PEND' %}selected{% endif %}>Pending</option>
+                        <option value="HOLD" {% if ticket.status == 'HOLD' %}selected{% endif %}>On Hold</option>
+                        <option value="CALL" {% if ticket.status == 'CALL' %}selected{% endif %}>Call Back</option>
+                        <option value="WAIT_ST" {% if ticket.status == 'WAIT_ST' %}selected{% endif %}>Await Staff</option>
+                        <option value="WAIT_CL" {% if ticket.status == 'WAIT_CL' %}selected{% endif %}>Await Client</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-3">
+                    <label class="small fw-bold">Client</label>
+                    <select name="client" class="form-select form-select-sm">
+                        {% for c in client_list %}
+                        <option value="{{ c.id }}" {% if c.id == ticket.client.id %}selected{% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small fw-bold">Category</label>
+                    <select name="category" class="form-select form-select-sm">
+                        {% for cat in category_list %}
+                        <option value="{{ cat.id }}" {% if cat.id == ticket.category.id %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="small fw-bold">Timeline (Req / Start / End)</label>
+                    <div class="input-group input-group-sm">
+                        <input type="time" name="requested_time" class="form-control" value="{{ ticket.requested_time|time:'H:i' }}">
+                        <input type="time" name="start_time" class="form-control" value="{{ ticket.start_time|time:'H:i' }}">
+                        <input type="time" name="end_time" class="form-control" value="{{ ticket.end_time|time:'H:i' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2 bg-light border rounded p-1">
+                <div class="col-md-12">
+                     <label class="small fw-bold text-muted">Travel Time (Optional)</label>
+                     <div class="input-group input-group-sm">
+                        <span class="input-group-text">Start</span>
+                        <input type="time" name="travel_start" class="form-control" value="{{ ticket.travel_start_time|time:'H:i' }}">
+                        <span class="input-group-text">End</span>
+                        <input type="time" name="travel_end" class="form-control" value="{{ ticket.travel_end_time|time:'H:i' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-12">
+                    <textarea name="description" class="form-control form-control-sm" rows="2">{{ ticket.description }}</textarea>
+                </div>
+                <div class="col-12">
+                    <textarea name="manager_ticket_notes" class="form-control form-control-sm" rows="1" placeholder="Manager Notes">{{ ticket.manager_ticket_notes }}</textarea>
+                </div>
+                <div class="col-12">
+                     <input type="file" name="attachments" class="form-control form-control-sm" multiple>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <button type="button" class="btn btn-sm btn-secondary me-2" 
+                        hx-get="{% url 'daily_report' %}" 
+                        hx-target="closest tr" 
+                        hx-swap="outerHTML">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </td>
+</tr>

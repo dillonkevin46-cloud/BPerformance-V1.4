@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 1cm; }
+        body { font-family: sans-serif; font-size: 10pt; color: #333; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        .day-section { page-break-inside: avoid; margin-bottom: 30px; border: 1px solid #ddd; padding: 10px; border-radius: 5px; }
+        .day-header { background: #f8f9fa; padding: 5px 10px; font-weight: bold; border-bottom: 1px solid #ddd; font-size: 12pt; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 9pt; }
+        th { background-color: #f1f5f9; font-weight: bold; }
+        .badge { padding: 2px 6px; border-radius: 4px; color: white; font-size: 8pt; }
+        .bg-comp { background-color: #2ecc71; }
+        .bg-block { background-color: #e74c3c; }
+        .bg-pend { background-color: #f1c40f; color: black; }
+        .bg-hold { background-color: #95a5a6; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Weekly Operations Report</h1>
+        <p>Period: {{ start_date|date:"d M Y" }} - {{ end_date|date:"d M Y" }}</p>
+    </div>
+
+    {% for report in reports %}
+    <div class="day-section">
+        <div class="day-header">
+            {{ report.date|date:"l, d F Y" }}
+            {% if report.manager_notes %}
+            <div style="font-weight: normal; font-size: 9pt; margin-top: 5px; font-style: italic;">
+                Note: {{ report.manager_notes }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th width="10%">Time</th>
+                    <th width="15%">Staff</th>
+                    <th width="15%">Client</th>
+                    <th width="10%">Type</th>
+                    <th width="40%">Description</th>
+                    <th width="10%">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in report.entries.all %}
+                <tr>
+                    <td>{{ t.start_time|time:"H:i" }}</td>
+                    <td>{{ t.staff.full_name }}</td>
+                    <td>{{ t.client.name }}</td>
+                    <td>{{ t.get_work_type_display }}</td>
+                    <td>
+                        {{ t.description }}
+                        {% if t.manager_ticket_notes %}
+                        <br><i style="color: #666;">Mgr: {{ t.manager_ticket_notes }}</i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if t.status == 'COMP' %}<span class="badge bg-comp">COMP</span>
+                        {% elif t.status == 'BLOCK' %}<span class="badge bg-block">BLOCK</span>
+                        {% elif t.status == 'PEND' %}<span class="badge bg-pend">PEND</span>
+                        {% else %}<span class="badge bg-hold">{{ t.status }}</span>{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" style="text-align: center; color: #999;">No tickets recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% empty %}
+    <p style="text-align: center;">No reports found for this period.</p>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% for ticket in tickets %}
+    {% include 'partials/ticket_row.html' %}
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center text-muted py-3">No tickets logged yet today.</td>
+</tr>
+{% endfor %}

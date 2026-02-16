@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 1cm; }
+        body { font-family: sans-serif; color: #333; }
+        .header { text-align: center; border-bottom: 2px solid #4facfe; padding-bottom: 20px; margin-bottom: 20px; }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
+        .stats-grid { display: table; width: 100%; margin-bottom: 30px; }
+        .stat-box { display: table-cell; width: 25%; text-align: center; padding: 10px; border: 1px solid #eee; background: #f8f9fa; }
+        .stat-value { font-size: 18pt; font-weight: bold; color: #2c3e50; }
+        .stat-label { font-size: 9pt; color: #7f8c8d; text-transform: uppercase; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+        th { background: #4facfe; color: white; padding: 8px; text-align: left; }
+        td { border-bottom: 1px solid #ddd; padding: 8px; }
+        .badge { padding: 2px 5px; border-radius: 3px; color: white; font-size: 8pt; }
+        
+        .bg-COMP { background: #2ecc71; }
+        .bg-BLOCK { background: #e74c3c; }
+        .bg-PEND { background: #f1c40f; color: black; }
+        .bg-WAIT { background: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Staff Performance Report</h1>
+        <h2>{{ staff.full_name }}</h2>
+        <p>{{ staff.department.name }} | Period: {{ start_date|date:"d M Y" }} - {{ end_date|date:"d M Y" }}</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-value">{{ total_tickets }}</div>
+            <div class="stat-label">Total Tickets</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ unique_clients }}</div>
+            <div class="stat-label">Clients Assisted</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ avg_resolution }}</div>
+            <div class="stat-label">Avg Resolution</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ avg_response }}</div>
+            <div class="stat-label">Avg Response</div>
+        </div>
+    </div>
+
+    <h3>Ticket History</h3>
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">Date</th>
+                <th width="15%">Client</th>
+                <th width="10%">Type</th>
+                <th width="40%">Description</th>
+                <th width="10%">Duration</th>
+                <th width="10%">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>{{ t.report.date|date:"d M Y" }}</td>
+                <td>{{ t.client.name }}</td>
+                <td>{{ t.get_work_type_display }}</td>
+                <td>{{ t.description|truncatechars:100 }}</td>
+                <td>{{ t.duration_display }}</td>
+                <td>
+                    {% if t.status == 'COMP' %}<span class="badge bg-COMP">COMP</span>
+                    {% elif t.status == 'BLOCK' %}<span class="badge bg-BLOCK">BLOCK</span>
+                    {% elif t.status == 'PEND' %}<span class="badge bg-PEND">PEND</span>
+                    {% else %}<span class="badge bg-WAIT">{{ t.status }}</span>{% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align: center;">No tickets found for this period.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

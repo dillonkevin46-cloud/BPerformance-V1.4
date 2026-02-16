@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Dashboard Specific Styles */
+    .slide-container { 
+        min-height: 85vh; 
+        padding: 20px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+    }
+    
+    .stat-card { 
+        background: white; 
+        border-radius: 12px; 
+        padding: 25px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+        text-align: center; 
+        transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-5px); }
+    .stat-card h2 { font-size: 2.8rem; font-weight: 800; margin: 0; color: #2c3e50; }
+    .stat-card p { margin: 5px 0 0; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; color: #7f8c8d; font-weight: 600; }
+    
+    .chart-box { 
+        background: white; 
+        border-radius: 12px; 
+        padding: 20px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+        height: 350px; 
+        position: relative;
+    }
+    
+    .carousel-control-prev, .carousel-control-next { width: 5%; opacity: 0; transition: opacity 0.3s; }
+    .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { 
+        background-color: #2c3e50; 
+        border-radius: 50%; 
+        padding: 25px; 
+        background-size: 50%;
+    }
+    
+    .log-card {
+        background: white; 
+        border-radius: 15px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-height: 75vh; 
+        overflow-y: auto;
+    }
+    
+    /* Full Screen Mode Overrides */
+    body.fullscreen .sidebar { display: none !important; }
+    body.fullscreen .main-content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
+    body.fullscreen .slide-container { min-height: 100vh; background: #ecf0f1; padding: 40px; }
+    body.fullscreen header, body.fullscreen footer { display: none; }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="fw-bold m-0"><i class="bi bi-speedometer2"></i> Operations Center</h4>
+        <small class="text-muted">Viewing: <strong>{{ period_label }}</strong></small>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center">
+        <div class="btn-group shadow-sm">
+            <a href="?period=daily" class="btn btn-sm btn-outline-dark {% if period == 'daily' %}active{% endif %}">Daily</a>
+            <a href="?period=weekly" class="btn btn-sm btn-outline-dark {% if period == 'weekly' %}active{% endif %}">Weekly</a>
+            <a href="?period=monthly" class="btn btn-sm btn-outline-dark {% if period == 'monthly' %}active{% endif %}">Monthly</a>
+            <a href="?period=yearly" class="btn btn-sm btn-outline-dark {% if period == 'yearly' %}active{% endif %}">Yearly</a>
+        </div>
+
+        <form method="GET" class="d-flex align-items-center gap-2">
+            <input type="date" name="start_date" class="form-control form-control-sm" value="{{ start_date|date:'Y-m-d' }}" required>
+            <span class="text-muted small">to</span>
+            <input type="date" name="end_date" class="form-control form-control-sm" value="{{ end_date|date:'Y-m-d' }}" required>
+            <button type="submit" class="btn btn-sm btn-primary">Go</button>
+        </form>
+
+        <div class="btn-group shadow-sm">
+            <button class="btn btn-dark" onclick="toggleFullScreen()">
+                <i class="bi bi-arrows-fullscreen me-2"></i> Full Screen
+            </button>
+            <button class="btn btn-outline-secondary" data-bs-target="#dashboardCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="btn btn-outline-secondary" data-bs-target="#dashboardCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="dashboardCarousel" class="carousel slide carousel-fade" data-bs-interval="false">
+    <div class="carousel-inner">
+        
+        <div class="carousel-item active">
+            <div class="slide-container">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h1 class="fw-bold text-primary display-5">GLOBAL OPERATIONS OVERVIEW</h1>
+                        <p class="text-muted fs-5">{{ period_label }}</p>
+                    </div>
+                </div>
+
+                <div class="row mb-4 g-4 px-5">
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-primary border-5">
+                            <h2>{{ overview.total|default:"0" }}</h2>
+                            <p>Total Tickets</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-success border-5">
+                            <h2 class="time-format" data-val="{{ overview.hours|default:'0' }}">{{ overview.hours|default:"0" }}h</h2>
+                            <p>Total Work Hours</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-warning border-5">
+                            <h2 class="time-format" data-val="{{ overview.travel_hours|default:'0' }}">{{ overview.travel_hours|default:"0" }}h</h2>
+                            <p>Total Travel Time</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-info border-5">
+                            <h2>{{ overview.staff_labels|length }}</h2>
+                            <p>Active Staff</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold mb-3 text-secondary">WORK TYPE BREAKDOWN</h6>
+                            <canvas id="chartOvType"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold mb-3 text-secondary">STATUS OVERVIEW</h6>
+                            <canvas id="chartOvStatus"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold mb-3 text-secondary">TOP CATEGORIES</h6>
+                            <canvas id="chartOvCat"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold mb-3 text-secondary">TOP CLIENTS</h6>
+                            <canvas id="chartOvClient"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-3">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold mb-3 text-secondary">AVG RESPONSE TIME (Minutes)</h6>
+                            <canvas id="chartOvResp"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="slide-container">
+                <div class="row mb-5 text-center">
+                    <h1 class="fw-bold text-warning display-4"><i class="bi bi-truck"></i> EXTERNAL OPERATIONS</h1>
+                    <p class="text-muted fs-5">On-Site Visits ({{ period_label }})</p>
+                </div>
+
+                <div class="row mb-5 g-4 justify-content-center px-5">
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-warning border-5">
+                            <h2>{{ ext.total|default:"0" }}</h2>
+                            <p>Site Visits</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-danger border-5">
+                            <h2 class="time-format" data-val="{{ ext.travel_hours|default:'0' }}">{{ ext.travel_hours|default:"0" }}h</h2>
+                            <p>Time on Road</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-5 mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">TOP CLIENTS VISITED</h6>
+                            <canvas id="chartExtClient"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">TECHNICIAN LOAD (VISITS)</h6>
+                            <canvas id="chartExtStaff"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-5">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">AVG RESPONSE TIME (EXTERNAL)</h6>
+                            <canvas id="chartExtResp"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="slide-container">
+                <div class="row mb-5 text-center">
+                    <h1 class="fw-bold text-success display-4"><i class="bi bi-building"></i> INTERNAL OPERATIONS</h1>
+                    <p class="text-muted fs-5">Office Tasks ({{ period_label }})</p>
+                </div>
+                 <div class="row mb-5 g-4 justify-content-center px-5">
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-success border-5">
+                            <h2>{{ int.total|default:"0" }}</h2>
+                            <p>Office Tasks</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-primary border-5">
+                            <h2 class="time-format" data-val="{{ int.hours|default:'0' }}">{{ int.hours|default:"0" }}h</h2>
+                            <p>Hours Logged</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 px-5 mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">INTERNAL CATEGORIES</h6>
+                            <canvas id="chartIntCat"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">STAFF ACTIVITY (INTERNAL)</h6>
+                            <canvas id="chartIntStaff"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-5">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">AVG RESPONSE TIME (INTERNAL)</h6>
+                            <canvas id="chartIntResp"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="slide-container">
+                <div class="row mb-5 text-center">
+                    <h1 class="fw-bold text-info display-4"><i class="bi bi-headset"></i> REMOTE SUPPORT</h1>
+                    <p class="text-muted fs-5">Helpdesk ({{ period_label }})</p>
+                </div>
+                <div class="row mb-5 g-4 justify-content-center px-5">
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-info border-5">
+                            <h2>{{ rem.total|default:"0" }}</h2>
+                            <p>Remote Sessions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-dark border-5">
+                            <h2 class="time-format" data-val="{{ rem.hours|default:'0' }}">{{ rem.hours|default:"0" }}h</h2>
+                            <p>Support Hours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 px-5 mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">CLIENTS SUPPORTED REMOTELY</h6>
+                            <canvas id="chartRemClient"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">SUPPORT AGENT LOAD</h6>
+                            <canvas id="chartRemStaff"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-5">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">AVG RESPONSE TIME (REMOTE)</h6>
+                            <canvas id="chartRemResp"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="slide-container">
+                <div class="row mb-5 text-center">
+                    <h1 class="fw-bold text-secondary display-4"><i class="bi bi-clipboard-data"></i> ADMINISTRATION</h1>
+                    <p class="text-muted fs-5">Management ({{ period_label }})</p>
+                </div>
+                <div class="row mb-5 g-4 justify-content-center px-5">
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-secondary border-5">
+                            <h2>{{ adm.total|default:"0" }}</h2>
+                            <p>Admin Tasks</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card border-bottom border-dark border-5">
+                            <h2 class="time-format" data-val="{{ adm.hours|default:'0' }}">{{ adm.hours|default:"0" }}h</h2>
+                            <p>Admin Hours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 px-5 mb-4">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">ADMIN ACTIVITY BREAKDOWN</h6>
+                            <canvas id="chartAdmCat"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 px-5">
+                    <div class="col-md-12">
+                        <div class="chart-box">
+                            <h6 class="text-center fw-bold text-secondary">AVG RESPONSE TIME (ADMIN)</h6>
+                            <canvas id="chartAdmResp"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="slide-container">
+                <div class="row mb-4 text-center">
+                    <h1 class="fw-bold text-dark display-4"><i class="bi bi-journal-richtext"></i> MANAGER'S LOG</h1>
+                    <p class="text-muted fs-5">Daily General Summaries ({{ period_label }})</p>
+                </div>
+
+                <div class="row justify-content-center px-5">
+                    <div class="col-md-10">
+                        <div class="log-card p-4">
+                            <ul class="list-group list-group-flush">
+                                {% for log in manager_logs %}
+                                <li class="list-group-item py-4 border-bottom">
+                                    <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                                        <h5 class="mb-0 fw-bold text-primary log-date">
+                                            <i class="bi bi-calendar-event me-2"></i> {{ log.date|date:"l, d F Y" }}
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            {% if log.is_submitted %}
+                                                <span class="badge bg-success rounded-pill px-3">Submitted</span>
+                                            {% else %}
+                                                <span class="badge bg-warning text-dark rounded-pill px-3">Draft</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <p class="mb-1 log-content">
+                                        {{ log.manager_notes|linebreaksbr }}
+                                    </p>
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item text-center py-5">
+                                    <i class="bi bi-journal-x fs-1 text-muted mb-3 d-block"></i>
+                                    <h3 class="text-muted">No summaries recorded for this period.</h3>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // 1. Keyboard Navigation
+    document.addEventListener('keydown', function(event) {
+        const carouselEl = document.getElementById('dashboardCarousel');
+        const carousel = bootstrap.Carousel.getOrCreateInstance(carouselEl);
+        if (event.key === 'ArrowRight') carousel.next();
+        else if (event.key === 'ArrowLeft') carousel.prev();
+    });
+
+    // 2. Full Screen Toggle
+    function toggleFullScreen() {
+        document.body.classList.toggle('fullscreen');
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch((e) => {});
+        else if (document.exitFullscreen) document.exitFullscreen();
+    }
+
+    // 3. Time Formatter for KPI Cards (1.5 -> 1h 30m)
+    document.querySelectorAll('.time-format').forEach(el => {
+        let val = parseFloat(el.getAttribute('data-val'));
+        if (!isNaN(val) && val > 0) {
+            let hours = Math.floor(val);
+            let mins = Math.round((val - hours) * 60);
+            if (mins === 0) el.innerText = `${hours}h`;
+            else el.innerText = `${hours}h ${mins}m`;
+        }
+    });
+
+    // 4. CHART GENERATION HELPER
+    function createChart(ctxId, type, labels, data, colors) {
+        const ctx = document.getElementById(ctxId);
+        if (!ctx) return; 
+        
+        new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { position: 'bottom', labels: { font: { size: 12 } } }
+                } 
+            }
+        });
+    }
+
+    // Default Palette for Staff/WorkType
+    const palette = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6', '#34495e', '#16a085', '#d35400'];
+
+    // --- RENDER CHARTS ---
+    
+    {% if overview %}
+    // Overview Slide
+    createChart('chartOvType', 'doughnut', {{ overview.type_labels|safe }}, {{ overview.type_counts|safe }}, palette);
+    createChart('chartOvStatus', 'pie', {{ overview.status_labels|safe }}, {{ overview.status_counts|safe }}, {{ overview.status_colors|safe }});
+    createChart('chartOvCat', 'bar', {{ overview.cat_labels|safe }}, {{ overview.cat_counts|safe }}, {{ overview.cat_colors|safe }});
+    createChart('chartOvClient', 'bar', {{ overview.client_labels|safe }}, {{ overview.client_counts|safe }}, {{ overview.client_colors|safe }});
+    createChart('chartOvResp', 'bar', {{ overview.resp_labels|safe }}, {{ overview.resp_data|safe }}, palette); // Avg Resp
+    {% endif %}
+
+    {% if ext %}
+    // External Slide
+    createChart('chartExtClient', 'bar', {{ ext.client_labels|safe }}, {{ ext.client_counts|safe }}, {{ ext.client_colors|safe }});
+    createChart('chartExtStaff', 'doughnut', {{ ext.staff_labels|safe }}, {{ ext.staff_counts|safe }}, palette);
+    createChart('chartExtResp', 'bar', {{ ext.resp_labels|safe }}, {{ ext.resp_data|safe }}, palette); // Avg Resp
+    {% endif %}
+
+    {% if int %}
+    // Internal Slide
+    createChart('chartIntCat', 'pie', {{ int.cat_labels|safe }}, {{ int.cat_counts|safe }}, {{ int.cat_colors|safe }});
+    createChart('chartIntStaff', 'bar', {{ int.staff_labels|safe }}, {{ int.staff_counts|safe }}, palette);
+    createChart('chartIntResp', 'bar', {{ int.resp_labels|safe }}, {{ int.resp_data|safe }}, palette); // Avg Resp
+    {% endif %}
+
+    {% if rem %}
+    // Remote Slide
+    createChart('chartRemClient', 'bar', {{ rem.client_labels|safe }}, {{ rem.client_counts|safe }}, {{ rem.client_colors|safe }});
+    createChart('chartRemStaff', 'doughnut', {{ rem.staff_labels|safe }}, {{ rem.staff_counts|safe }}, palette);
+    createChart('chartRemResp', 'bar', {{ rem.resp_labels|safe }}, {{ rem.resp_data|safe }}, palette); // Avg Resp
+    {% endif %}
+
+    {% if adm %}
+    // Admin Slide
+    createChart('chartAdmCat', 'bar', {{ adm.cat_labels|safe }}, {{ adm.cat_counts|safe }}, {{ adm.cat_colors|safe }});
+    createChart('chartAdmResp', 'bar', {{ adm.resp_labels|safe }}, {{ adm.resp_data|safe }}, palette); // Avg Resp
+    {% endif %}
+
+</script>
+{% endblock %}

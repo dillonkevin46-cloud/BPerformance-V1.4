@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+    <div class="d-flex align-items-center">
+        <h2 class="fw-bold mb-0 me-3"><i class="bi bi-calendar-check"></i> Daily Report</h2>
+        
+        <input type="date" class="form-control form-control-lg me-3" style="width: auto;"
+               value="{{ report.date|date:'Y-m-d' }}" 
+               onchange="window.location.href='/report/' + this.value + '/'">
+        
+        {% if report.is_submitted %}
+            <span class="badge bg-success fs-6"><i class="bi bi-check-circle-fill me-1"></i> Submitted</span>
+        {% else %}
+            <span class="badge bg-warning text-dark fs-6"><i class="bi bi-pencil-fill me-1"></i> Draft</span>
+        {% endif %}
+    </div>
+
+    <div class="d-flex gap-2 align-items-center">
+        <div id="save-status" class="fw-bold text-success me-3 small"></div>
+        
+        <a href="{% url 'generate_pdf' report.id %}" class="btn btn-outline-danger">
+            <i class="bi bi-file-pdf"></i> PDF
+        </a>
+        
+        {% if not report.is_submitted %}
+            <a href="{% url 'mark_submitted' report.id %}" 
+               class="btn btn-success" 
+               onclick="return confirm('Mark as submitted?')">
+                <i class="bi bi-send"></i> Submit
+            </a>
+        {% else %}
+             <button class="btn btn-secondary" disabled><i class="bi bi-lock"></i> Submitted</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="m-0"><i class="bi bi-list-task"></i> Operations Log</h5>
+                <span class="badge bg-light text-dark border">{{ tickets|length }} Tickets</span>
+            </div>
+            <div class="card-body">
+                
+                <form hx-post="{% url 'htmx_add_ticket' report.id %}" 
+                      hx-target="#ticket-table-body" 
+                      hx-on::after-request="this.reset()"
+                      enctype="multipart/form-data">
+                    
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-3">
+                            <label class="small text-muted fw-bold">Staff</label>
+                            <select name="staff" class="form-select" required>
+                                <option value="" selected>Select Staff...</option>
+                                {% for s in staff_list %}
+                                    <option value="{{ s.id }}">{{ s.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="small text-muted fw-bold">Work Type</label>
+                            <select name="work_type" id="workTypeSelect" class="form-select" required onchange="toggleFields()">
+                                <option value="INT">Internal</option>
+                                <option value="EXT">External</option>
+                                <option value="REM">Remote</option>
+                                <option value="ADM">Admin</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="small text-muted fw-bold">Location</label>
+                            <select name="work_location" class="form-select" required>
+                                <option value="OFFICE">🏢 Office</option>
+                                <option value="HOME">🏠 Home</option>
+                                <option value="HYBRID">🚗 Hybrid</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="small text-muted fw-bold">Client</label>
+                            <select name="client" class="form-select" required>
+                                <option value="" selected>Select Client...</option>
+                                {% for c in client_list %}
+                                    <option value="{{ c.id }}">{{ c.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-3">
+                            <label class="small text-muted fw-bold">Status</label>
+                            <select name="status" class="form-select" required>
+                                <option value="COMP" class="text-success fw-bold">Completed</option>
+                                <option value="BLOCK" class="text-danger fw-bold">Blocker</option>
+                                <option value="PEND" class="text-warning fw-bold">Pending</option>
+                                <option value="HOLD" class="text-secondary fw-bold">On Hold</option>
+                                <option value="CALL">Call Back</option>
+                                <option value="WAIT_ST">Await Staff</option>
+                                <option value="WAIT_CL">Await Client</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small text-muted fw-bold">Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="" selected>Select Category...</option>
+                                {% for cat in category_list %}
+                                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small text-muted fw-bold">Timeline (Req / Start / End)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted"><i class="bi bi-bell"></i></span>
+                                <input type="time" name="requested_time" class="form-control" required title="Time Client Requested Help">
+                                
+                                <span class="input-group-text bg-light text-muted"><i class="bi bi-play-fill"></i></span>
+                                <input type="time" name="start_time" class="form-control" required title="Start Time">
+                                
+                                <span class="input-group-text bg-light text-muted"><i class="bi bi-stop-fill"></i></span>
+                                <input type="time" name="end_time" class="form-control" required title="End Time">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3 bg-warning bg-opacity-10 p-2 rounded d-none" id="travel-box">
+                        <div class="col-md-12">
+                            <h6 class="text-warning small fw-bold text-dark mb-1"><i class="bi bi-car-front"></i> Travel Time</h6>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Left Office</span>
+                                <input type="time" name="travel_start" class="form-control">
+                                <span class="input-group-text">Arrived Site</span>
+                                <input type="time" name="travel_end" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-12">
+                            <textarea name="description" class="form-control" rows="2" placeholder="Ticket Details (What was done?)" required></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea name="manager_ticket_notes" class="form-control" rows="1" placeholder="Manager Notes (Optional)..."></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="file" name="attachments" class="form-control" multiple>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 fw-bold"><i class="bi bi-plus-lg"></i> Add Ticket</button>
+                </form>
+
+                <div class="mt-4 mb-3 p-3 bg-light rounded border">
+                    <form method="GET" class="row g-2 align-items-center">
+                        <div class="col-auto"><span class="fw-bold small text-muted"><i class="bi bi-funnel"></i> Filter:</span></div>
+                        <div class="col-auto">
+                            <select name="staff" class="form-select form-select-sm">
+                                <option value="">All Staff</option>
+                                {% for s in staff_list %}
+                                    <option value="{{ s.id }}" {% if filter_staff == s.id %}selected{% endif %}>{{ s.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <select name="client" class="form-select form-select-sm">
+                                <option value="">All Clients</option>
+                                {% for c in client_list %}
+                                    <option value="{{ c.id }}" {% if filter_client == c.id %}selected{% endif %}>{{ c.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="">All Statuses</option>
+                                {% for code, label in status_choices %}
+                                    <option value="{{ code }}" {% if filter_status == code %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-sm btn-secondary">Apply</button>
+                            {% if filter_staff or filter_client or filter_status %}
+                                <a href="." class="btn btn-sm btn-outline-secondary">Clear</a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 10%;">Status</th>
+                                <th style="width: 15%;">Staff / Type</th>
+                                <th style="width: 15%;">Client / Cat</th>
+                                <th style="width: 15%;">Time</th>
+                                <th style="width: 35%;">Details</th>
+                                <th style="width: 5%;">Edit</th>
+                                <th style="width: 5%;">Del</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticket-table-body">
+                            {% include 'partials/ticket_list.html' with tickets=tickets %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="fw-bold"><i class="bi bi-journal-text"></i> General Day Summary</h6>
+                <textarea name="manager_notes" class="form-control" rows="3" 
+                          hx-post="{% url 'htmx_save_notes' report.id %}"
+                          hx-trigger="keyup changed delay:1s"
+                          hx-target="#save-status"
+                          placeholder="Summary (Auto-saves)...">{{ report.manager_notes }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px; z-index: 1;">
+            <div class="card-header bg-white py-3">
+                <h5 class="m-0"><i class="bi bi-people"></i> Staff Pulse & Review</h5>
+            </div>
+            <div class="card-body p-0" style="max-height: 80vh; overflow-y: auto;">
+                <div class="accordion accordion-flush" id="staffAccordion">
+                    {% for staff, metrics in staff_metrics_map.items %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-{{ staff.id }}">
+                                <strong>{{ staff.full_name }}</strong>
+                            </button>
+                        </h2>
+                        <div id="flush-{{ staff.id }}" class="accordion-collapse collapse" data-bs-parent="#staffAccordion">
+                            <div class="accordion-body bg-light">
+                                {% for metric in metrics %}
+                                <div class="card mb-2 border-0 shadow-sm">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <small class="fw-bold text-dark">{{ metric.criteria.name }}</small>
+                                            <span class="badge bg-primary rounded-pill" id="score-val-{{ metric.id }}">{{ metric.score }}</span>
+                                        </div>
+                                        
+                                        <div class="d-flex flex-wrap gap-1 mb-2">
+                                            {% with m_id=metric.id %}
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 10 %}btn-success{% else %}btn-outline-success{% endif %}" onclick="setScore(this, {{ m_id }}, 10)">Perfect</button>
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 8 %}btn-primary{% else %}btn-outline-primary{% endif %}" onclick="setScore(this, {{ m_id }}, 8)">Great</button>
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 6 %}btn-info{% else %}btn-outline-info{% endif %}" onclick="setScore(this, {{ m_id }}, 6)">Good</button>
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 4 %}btn-secondary{% else %}btn-outline-secondary{% endif %}" onclick="setScore(this, {{ m_id }}, 4)">Okay</button>
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 2 %}btn-warning{% else %}btn-outline-warning{% endif %}" onclick="setScore(this, {{ m_id }}, 2)">Improve</button>
+                                            <button type="button" class="btn btn-sm flex-grow-1 {% if metric.score == 0 %}btn-danger{% else %}btn-outline-danger{% endif %}" onclick="setScore(this, {{ m_id }}, 0)">Bad</button>
+                                            {% endwith %}
+                                        </div>
+                                        
+                                        <input type="hidden" name="score" id="score-input-{{ metric.id }}" value="{{ metric.score }}"
+                                               hx-post="{% url 'htmx_update_metric_score' metric.id %}"
+                                               hx-trigger="change">
+
+                                        <textarea id="note-{{ metric.id }}" 
+                                                  class="form-control form-control-sm mt-1 {% if metric.score <= 2 %}border-danger{% endif %}" 
+                                                  rows="1" 
+                                                  hx-post="{% url 'htmx_save_metric_note' metric.id %}"
+                                                  hx-trigger="keyup changed delay:1s"
+                                                  name="notes"
+                                                  placeholder="Comment..."
+                                                  {% if metric.score <= 2 %}required{% endif %}>{{ metric.notes }}</textarea>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="text-center small text-muted p-3">No criteria found.</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleFields() {
+        const typeSelect = document.getElementById('workTypeSelect');
+        const travelBox = document.getElementById('travel-box');
+        if (typeSelect.value === 'EXT') { 
+            travelBox.classList.remove('d-none');
+        } else {
+            travelBox.classList.add('d-none');
+        }
+    }
+
+    function setScore(btn, metricId, score) {
+        // 1. Update UI Buttons
+        const parent = btn.parentElement;
+        const buttons = parent.querySelectorAll('button');
+        
+        // Reset all buttons in this group to their outline state
+        buttons.forEach(b => {
+            // Remove solid classes
+            b.classList.remove('btn-success', 'btn-primary', 'btn-info', 'btn-secondary', 'btn-warning', 'btn-danger');
+            
+            // Ensure outline classes based on text/value logic
+            if(b.innerText === 'Perfect') b.classList.add('btn-outline-success');
+            else if(b.innerText === 'Great') b.classList.add('btn-outline-primary');
+            else if(b.innerText === 'Good') b.classList.add('btn-outline-info');
+            else if(b.innerText === 'Okay') b.classList.add('btn-outline-secondary');
+            else if(b.innerText === 'Improve') b.classList.add('btn-outline-warning');
+            else if(b.innerText === 'Bad') b.classList.add('btn-outline-danger');
+        });
+
+        // Set active style for clicked button (remove outline, add solid)
+        if(score === 10) { btn.classList.remove('btn-outline-success'); btn.classList.add('btn-success'); }
+        else if(score === 8) { btn.classList.remove('btn-outline-primary'); btn.classList.add('btn-primary'); }
+        else if(score === 6) { btn.classList.remove('btn-outline-info'); btn.classList.add('btn-info'); }
+        else if(score === 4) { btn.classList.remove('btn-outline-secondary'); btn.classList.add('btn-secondary'); }
+        else if(score === 2) { btn.classList.remove('btn-outline-warning'); btn.classList.add('btn-warning'); }
+        else if(score === 0) { btn.classList.remove('btn-outline-danger'); btn.classList.add('btn-danger'); }
+
+        // 2. Update Hidden Input and Trigger HTMX
+        const input = document.getElementById('score-input-' + metricId);
+        input.value = score;
+        input.dispatchEvent(new Event('change')); // Triggers HTMX
+
+        // 3. Update Badge
+        document.getElementById('score-val-' + metricId).innerText = score;
+
+        // 4. Handle Required Note
+        const noteEl = document.getElementById('note-' + metricId);
+        if (score <= 2) {
+            noteEl.required = true;
+            noteEl.classList.add('border-danger');
+            if (!noteEl.value.trim()) noteEl.focus();
+        } else {
+            noteEl.required = false;
+            noteEl.classList.remove('border-danger');
+        }
+    }
+</script>
+
+</body>
+{% endblock %}

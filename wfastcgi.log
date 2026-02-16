@@ -1,0 +1,559 @@
+2026-02-08 19:50:29.974579: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 19:50:29.975636: wfastcgi.py 3.0.0 initialized
+2026-02-08 19:56:46.366407: wfastcgi.py exiting because BPerformance\settings.py has changed, matching .*((\.py)|(\.config))$
+2026-02-08 19:56:46.373120: Running on_exit tasks
+2026-02-08 20:00:02.644337: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 20:00:02.646376: wfastcgi.py 3.0.0 initialized
+2026-02-08 20:56:44.040911: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-08 20:56:49.014932: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 20:56:49.016159: wfastcgi.py 3.0.0 initialized
+2026-02-08 20:56:49.998869: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 20:56:50.009065: wfastcgi.py 3.0.0 initialized
+2026-02-08 21:38:43.316519: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 21:38:43.317787: wfastcgi.py 3.0.0 initialized
+2026-02-08 22:21:58.713863: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 22:21:58.715346: wfastcgi.py 3.0.0 initialized
+2026-02-08 23:43:58.425889: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-08 23:43:58.427089: wfastcgi.py 3.0.0 initialized
+2026-02-09 01:01:31.410899: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 01:01:31.412306: wfastcgi.py 3.0.0 initialized
+2026-02-09 03:15:31.903185: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-09 03:15:31.904492: Running on_exit tasks
+2026-02-09 03:15:31.905440: wfastcgi.py 3.0.0 closed
+2026-02-09 03:15:33.697106: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 03:15:33.700085: wfastcgi.py 3.0.0 initialized
+2026-02-09 03:40:19.008408: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 03:40:19.010074: wfastcgi.py 3.0.0 initialized
+2026-02-09 03:49:33.082858: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 03:49:33.084969: wfastcgi.py 3.0.0 initialized
+2026-02-09 04:02:51.572969: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 04:02:51.574604: wfastcgi.py 3.0.0 initialized
+2026-02-09 04:08:21.552306: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 04:08:21.553498: wfastcgi.py 3.0.0 initialized
+2026-02-09 05:26:00.853828: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 05:26:00.855094: wfastcgi.py 3.0.0 initialized
+2026-02-09 05:34:36.879402: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 05:34:36.880797: wfastcgi.py 3.0.0 initialized
+2026-02-09 06:53:56.081983: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-09 06:53:56.083148: Running on_exit tasks
+2026-02-09 06:53:56.084178: wfastcgi.py 3.0.0 closed
+2026-02-09 06:53:58.628105: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 06:53:58.629478: wfastcgi.py 3.0.0 initialized
+2026-02-09 06:54:00.370025: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 06:54:00.372440: wfastcgi.py 3.0.0 initialized
+2026-02-09 08:49:41.224460: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 08:49:41.225846: wfastcgi.py 3.0.0 initialized
+2026-02-09 10:22:44.067905: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 10:22:44.069555: wfastcgi.py 3.0.0 initialized
+2026-02-09 11:08:06.262111: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 11:08:06.266643: wfastcgi.py 3.0.0 initialized
+2026-02-09 11:46:04.375469: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 11:46:04.377439: wfastcgi.py 3.0.0 initialized
+2026-02-09 12:25:19.963303: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 12:25:19.966370: wfastcgi.py 3.0.0 initialized
+2026-02-09 12:45:30.164312: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 12:45:30.165701: wfastcgi.py 3.0.0 initialized
+2026-02-09 13:22:10.959390: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 13:22:10.961114: wfastcgi.py 3.0.0 initialized
+2026-02-09 14:41:25.136249: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 14:41:25.138126: wfastcgi.py 3.0.0 initialized
+2026-02-09 15:10:13.239305: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 15:10:13.240920: wfastcgi.py 3.0.0 initialized
+2026-02-09 15:33:02.727110: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 15:33:02.728896: wfastcgi.py 3.0.0 initialized
+2026-02-09 16:19:53.487423: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 16:19:53.489129: wfastcgi.py 3.0.0 initialized
+2026-02-09 16:28:55.812171: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 16:28:55.814157: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:08:57.154990: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-09 17:08:57.156122: Running on_exit tasks
+2026-02-09 17:08:59.198924: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:08:59.201592: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:22.533798: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:22.539840: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:22.554257: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:22.567465: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:22.608519: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:22.611355: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:34.814023: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:34.816517: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:35.049978: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:35.052146: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:14:35.873547: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:14:35.875310: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:55:13.369719: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-09 17:55:13.371250: Running on_exit tasks
+2026-02-09 17:55:13.372290: wfastcgi.py 3.0.0 closed
+2026-02-09 17:55:20.014918: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:55:20.016256: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:55:23.354861: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:55:23.480593: wfastcgi.py 3.0.0 initialized
+2026-02-09 17:55:26.435729: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 17:55:26.437286: wfastcgi.py 3.0.0 initialized
+2026-02-09 18:23:03.593152: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 18:23:03.601857: wfastcgi.py 3.0.0 initialized
+2026-02-09 18:32:45.778460: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 18:32:45.780066: wfastcgi.py 3.0.0 initialized
+2026-02-09 19:09:10.854002: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 19:09:10.856516: wfastcgi.py 3.0.0 initialized
+2026-02-09 19:59:26.976091: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 19:59:26.979070: wfastcgi.py 3.0.0 initialized
+2026-02-09 20:22:16.556454: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 20:22:16.558286: wfastcgi.py 3.0.0 initialized
+2026-02-09 20:35:04.675496: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-09 20:36:09.062562: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 20:36:09.063868: wfastcgi.py 3.0.0 initialized
+2026-02-09 21:28:48.340192: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 21:28:48.341225: wfastcgi.py 3.0.0 initialized
+2026-02-09 22:07:08.598757: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 22:07:08.605832: wfastcgi.py 3.0.0 initialized
+2026-02-09 22:20:25.207262: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 22:20:25.208412: wfastcgi.py 3.0.0 initialized
+2026-02-09 22:34:31.526127: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 22:34:31.527123: wfastcgi.py 3.0.0 initialized
+2026-02-09 22:48:31.838432: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 22:48:31.839825: wfastcgi.py 3.0.0 initialized
+2026-02-09 23:01:31.084790: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 23:01:31.086262: wfastcgi.py 3.0.0 initialized
+2026-02-09 23:20:20.623778: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 23:20:20.625849: wfastcgi.py 3.0.0 initialized
+2026-02-09 23:34:29.790193: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-09 23:34:29.791695: wfastcgi.py 3.0.0 initialized
+2026-02-10 00:29:03.697090: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 00:29:03.698061: wfastcgi.py 3.0.0 initialized
+2026-02-10 00:57:24.927620: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 00:57:24.929030: wfastcgi.py 3.0.0 initialized
+2026-02-10 01:03:07.862011: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 01:03:07.863892: wfastcgi.py 3.0.0 initialized
+2026-02-10 01:30:04.633914: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 01:30:04.635308: wfastcgi.py 3.0.0 initialized
+2026-02-10 01:52:57.183429: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 01:52:57.185330: wfastcgi.py 3.0.0 initialized
+2026-02-10 02:02:56.247792: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 02:02:56.249904: wfastcgi.py 3.0.0 initialized
+2026-02-10 02:34:07.870601: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 02:34:07.872205: wfastcgi.py 3.0.0 initialized
+2026-02-10 03:11:59.997816: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 03:12:00.001609: wfastcgi.py 3.0.0 initialized
+2026-02-10 03:12:03.932250: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 03:12:03.934127: wfastcgi.py 3.0.0 initialized
+2026-02-10 03:57:32.871766: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 03:57:32.873555: wfastcgi.py 3.0.0 initialized
+2026-02-10 04:16:30.086364: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 04:16:30.088217: wfastcgi.py 3.0.0 initialized
+2026-02-10 04:24:47.099628: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 04:24:47.101452: wfastcgi.py 3.0.0 initialized
+2026-02-10 04:43:13.606948: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 04:43:13.609051: wfastcgi.py 3.0.0 initialized
+2026-02-10 04:53:42.893351: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 04:53:42.894960: wfastcgi.py 3.0.0 initialized
+2026-02-10 05:11:46.621108: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 05:11:46.623204: wfastcgi.py 3.0.0 initialized
+2026-02-10 05:35:18.313980: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 05:35:18.315009: wfastcgi.py 3.0.0 initialized
+2026-02-10 05:58:05.890126: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 05:58:05.892366: wfastcgi.py 3.0.0 initialized
+2026-02-10 06:40:10.786432: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 06:40:10.787772: wfastcgi.py 3.0.0 initialized
+2026-02-10 07:17:13.777225: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 07:17:13.778504: wfastcgi.py 3.0.0 initialized
+2026-02-10 08:27:30.384669: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 08:27:30.386349: wfastcgi.py 3.0.0 initialized
+2026-02-10 08:54:50.381196: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 08:54:50.382763: wfastcgi.py 3.0.0 initialized
+2026-02-10 09:14:20.673827: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 09:14:20.675875: wfastcgi.py 3.0.0 initialized
+2026-02-10 09:53:09.047693: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 09:53:09.049307: wfastcgi.py 3.0.0 initialized
+2026-02-10 10:05:36.857815: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 10:05:36.861747: wfastcgi.py 3.0.0 initialized
+2026-02-10 10:10:55.013820: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 10:10:55.015143: wfastcgi.py 3.0.0 initialized
+2026-02-10 10:20:44.127112: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 10:20:44.129104: wfastcgi.py 3.0.0 initialized
+2026-02-10 10:57:12.318753: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 10:57:12.320547: wfastcgi.py 3.0.0 initialized
+2026-02-10 11:12:02.923917: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 11:12:02.929599: wfastcgi.py 3.0.0 initialized
+2026-02-10 11:26:21.199812: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 11:26:21.201449: wfastcgi.py 3.0.0 initialized
+2026-02-10 13:35:20.967956: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 13:35:20.969274: wfastcgi.py 3.0.0 initialized
+2026-02-10 14:44:48.610174: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 14:44:48.612570: wfastcgi.py 3.0.0 initialized
+2026-02-10 16:02:47.159825: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 16:02:47.161266: wfastcgi.py 3.0.0 initialized
+2026-02-10 16:36:05.915981: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 16:36:05.922810: wfastcgi.py 3.0.0 initialized
+2026-02-10 16:44:09.782060: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 16:44:09.783827: wfastcgi.py 3.0.0 initialized
+2026-02-10 16:51:56.563807: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 16:51:56.565984: wfastcgi.py 3.0.0 initialized
+2026-02-10 16:57:17.618391: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 16:57:17.619769: wfastcgi.py 3.0.0 initialized
+2026-02-10 17:29:50.708848: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 17:29:50.710581: wfastcgi.py 3.0.0 initialized
+2026-02-10 17:38:43.049861: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 17:38:43.056385: wfastcgi.py 3.0.0 initialized
+2026-02-10 17:48:37.234028: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 17:48:37.235929: wfastcgi.py 3.0.0 initialized
+2026-02-10 18:31:05.014878: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 18:31:05.016867: wfastcgi.py 3.0.0 initialized
+2026-02-10 18:59:09.129475: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 18:59:09.130834: wfastcgi.py 3.0.0 initialized
+2026-02-10 19:26:49.125056: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 19:26:49.129731: wfastcgi.py 3.0.0 initialized
+2026-02-10 19:49:52.821330: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 19:49:52.823213: wfastcgi.py 3.0.0 initialized
+2026-02-10 20:16:34.301835: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 20:16:34.305507: wfastcgi.py 3.0.0 initialized
+2026-02-10 20:30:18.571341: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 20:30:18.573203: wfastcgi.py 3.0.0 initialized
+2026-02-10 21:34:53.843196: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 21:34:53.845415: wfastcgi.py 3.0.0 initialized
+2026-02-10 22:14:51.429918: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 22:14:51.431930: wfastcgi.py 3.0.0 initialized
+2026-02-10 22:14:52.265113: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 22:14:52.358702: wfastcgi.py 3.0.0 initialized
+2026-02-10 22:20:49.505625: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 22:20:49.508131: wfastcgi.py 3.0.0 initialized
+2026-02-10 23:10:08.693311: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 23:10:08.701689: wfastcgi.py 3.0.0 initialized
+2026-02-10 23:46:56.022230: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-10 23:46:56.023962: wfastcgi.py 3.0.0 initialized
+2026-02-11 00:24:41.702337: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 00:24:41.704087: wfastcgi.py 3.0.0 initialized
+2026-02-11 00:37:33.214033: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 00:37:33.215298: wfastcgi.py 3.0.0 initialized
+2026-02-11 02:07:39.106792: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 02:07:39.108825: wfastcgi.py 3.0.0 initialized
+2026-02-11 03:05:42.923761: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 03:05:42.926592: wfastcgi.py 3.0.0 initialized
+2026-02-11 03:14:43.135566: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 03:14:43.137324: wfastcgi.py 3.0.0 initialized
+2026-02-11 03:41:57.582643: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 03:41:57.584398: wfastcgi.py 3.0.0 initialized
+2026-02-11 03:56:01.316750: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 03:56:01.318679: wfastcgi.py 3.0.0 initialized
+2026-02-11 04:05:59.130472: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 04:05:59.135563: wfastcgi.py 3.0.0 initialized
+2026-02-11 04:24:20.609166: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 04:24:20.610466: wfastcgi.py 3.0.0 initialized
+2026-02-11 04:47:44.557829: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 04:47:44.559261: wfastcgi.py 3.0.0 initialized
+2026-02-11 05:05:58.681761: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 05:05:58.683169: wfastcgi.py 3.0.0 initialized
+2026-02-11 05:20:13.990708: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 05:20:13.992561: wfastcgi.py 3.0.0 initialized
+2026-02-11 05:43:43.787352: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 05:43:43.789825: wfastcgi.py 3.0.0 initialized
+2026-02-11 06:03:41.297529: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 06:03:41.299889: wfastcgi.py 3.0.0 initialized
+2026-02-11 06:59:37.069634: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 06:59:37.071358: wfastcgi.py 3.0.0 initialized
+2026-02-11 07:13:34.332394: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 07:13:34.340981: wfastcgi.py 3.0.0 initialized
+2026-02-11 07:26:45.635617: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 07:26:45.637468: wfastcgi.py 3.0.0 initialized
+2026-02-11 07:37:10.890556: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 07:37:10.892575: wfastcgi.py 3.0.0 initialized
+2026-02-11 08:09:26.273150: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 08:09:26.274737: wfastcgi.py 3.0.0 initialized
+2026-02-11 08:37:46.450591: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 08:37:46.453591: wfastcgi.py 3.0.0 initialized
+2026-02-11 08:46:19.381987: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 08:46:19.385210: wfastcgi.py 3.0.0 initialized
+2026-02-11 08:58:28.616176: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-11 08:58:28.618000: Running on_exit tasks
+2026-02-11 08:58:28.619779: wfastcgi.py 3.0.0 closed
+2026-02-11 08:58:32.841157: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 08:58:32.846615: wfastcgi.py 3.0.0 initialized
+2026-02-11 08:58:38.911848: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 08:58:38.916155: wfastcgi.py 3.0.0 initialized
+2026-02-11 09:04:54.272727: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 09:04:54.276311: wfastcgi.py 3.0.0 initialized
+2026-02-11 10:28:07.383515: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 10:28:07.385414: wfastcgi.py 3.0.0 initialized
+2026-02-11 12:58:13.459649: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 12:58:13.461420: wfastcgi.py 3.0.0 initialized
+2026-02-11 16:45:31.432893: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 16:45:31.435130: wfastcgi.py 3.0.0 initialized
+2026-02-11 20:28:08.200704: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 20:28:08.203395: wfastcgi.py 3.0.0 initialized
+2026-02-11 23:33:56.620210: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 23:33:56.622647: wfastcgi.py 3.0.0 initialized
+2026-02-11 23:33:59.638382: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-11 23:33:59.639373: wfastcgi.py 3.0.0 initialized
+2026-02-12 02:22:39.699762: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 02:22:39.703491: wfastcgi.py 3.0.0 initialized
+2026-02-12 03:14:51.406312: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 03:14:51.408107: wfastcgi.py 3.0.0 initialized
+2026-02-12 05:42:37.913137: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 05:42:37.915755: wfastcgi.py 3.0.0 initialized
+2026-02-12 05:48:34.694327: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 05:48:34.697162: wfastcgi.py 3.0.0 initialized
+2026-02-12 06:21:27.403975: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 06:21:27.405741: wfastcgi.py 3.0.0 initialized
+2026-02-12 06:48:08.374735: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 06:48:08.383473: wfastcgi.py 3.0.0 initialized
+2026-02-12 06:58:07.297215: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 06:58:07.300880: wfastcgi.py 3.0.0 initialized
+2026-02-12 07:57:40.245570: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 07:57:40.247996: wfastcgi.py 3.0.0 initialized
+2026-02-12 08:45:09.529555: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 08:45:09.535854: wfastcgi.py 3.0.0 initialized
+2026-02-12 09:11:38.952520: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 09:11:38.965892: wfastcgi.py 3.0.0 initialized
+2026-02-12 09:39:37.013304: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 09:39:37.015134: wfastcgi.py 3.0.0 initialized
+2026-02-12 10:46:04.607694: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 10:46:04.609610: wfastcgi.py 3.0.0 initialized
+2026-02-12 11:11:44.486189: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 11:11:44.488170: wfastcgi.py 3.0.0 initialized
+2026-02-12 13:22:14.985878: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 13:22:14.987650: wfastcgi.py 3.0.0 initialized
+2026-02-12 13:58:44.771612: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 13:58:44.773441: wfastcgi.py 3.0.0 initialized
+2026-02-12 14:16:01.244377: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 14:16:01.250539: wfastcgi.py 3.0.0 initialized
+2026-02-12 15:07:01.612391: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 15:07:01.614465: wfastcgi.py 3.0.0 initialized
+2026-02-12 15:20:42.611132: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 15:20:42.613967: wfastcgi.py 3.0.0 initialized
+2026-02-12 15:33:17.696023: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 15:33:17.698988: wfastcgi.py 3.0.0 initialized
+2026-02-12 16:00:21.045612: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 16:00:21.055677: wfastcgi.py 3.0.0 initialized
+2026-02-12 16:39:12.100291: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 16:39:12.103192: wfastcgi.py 3.0.0 initialized
+2026-02-12 18:19:00.494433: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 18:19:00.496801: wfastcgi.py 3.0.0 initialized
+2026-02-12 18:38:35.970075: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 18:38:35.972241: wfastcgi.py 3.0.0 initialized
+2026-02-12 18:47:52.380551: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 18:47:52.388973: wfastcgi.py 3.0.0 initialized
+2026-02-12 19:01:35.666063: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 19:01:35.668994: wfastcgi.py 3.0.0 initialized
+2026-02-12 19:16:08.719669: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-12 19:16:08.723425: Running on_exit tasks
+2026-02-12 19:16:08.727525: wfastcgi.py 3.0.0 closed
+2026-02-12 19:16:29.062635: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 19:16:29.064868: wfastcgi.py 3.0.0 initialized
+2026-02-12 20:10:11.386522: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-12 20:10:11.388644: wfastcgi.py 3.0.0 initialized
+2026-02-13 00:15:31.754460: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 00:15:31.755617: wfastcgi.py 3.0.0 initialized
+2026-02-13 02:05:17.290894: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 02:05:17.293450: wfastcgi.py 3.0.0 initialized
+2026-02-13 02:05:20.192013: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 02:05:20.194468: wfastcgi.py 3.0.0 initialized
+2026-02-13 03:25:51.294659: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 03:25:51.305020: wfastcgi.py 3.0.0 initialized
+2026-02-13 04:00:51.456699: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 04:00:51.459347: wfastcgi.py 3.0.0 initialized
+2026-02-13 04:17:21.205204: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 04:17:21.207238: wfastcgi.py 3.0.0 initialized
+2026-02-13 04:54:28.550317: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 04:54:28.555706: wfastcgi.py 3.0.0 initialized
+2026-02-13 05:08:05.287649: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 05:08:05.289525: wfastcgi.py 3.0.0 initialized
+2026-02-13 05:44:27.429401: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 05:44:27.441420: wfastcgi.py 3.0.0 initialized
+2026-02-13 05:58:38.067531: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 05:58:38.069471: wfastcgi.py 3.0.0 initialized
+2026-02-13 06:11:34.956179: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 06:11:34.958432: wfastcgi.py 3.0.0 initialized
+2026-02-13 06:35:44.582817: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 06:35:44.588544: wfastcgi.py 3.0.0 initialized
+2026-02-13 06:44:35.472654: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 06:44:35.474702: wfastcgi.py 3.0.0 initialized
+2026-02-13 07:24:38.915060: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 07:24:38.917196: wfastcgi.py 3.0.0 initialized
+2026-02-13 07:52:15.776264: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 07:52:15.779264: wfastcgi.py 3.0.0 initialized
+2026-02-13 08:15:15.522180: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 08:15:15.524126: wfastcgi.py 3.0.0 initialized
+2026-02-13 08:34:16.588884: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 08:34:16.591945: wfastcgi.py 3.0.0 initialized
+2026-02-13 11:41:41.221753: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 11:41:41.225035: wfastcgi.py 3.0.0 initialized
+2026-02-13 12:43:16.250201: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 12:43:16.256031: wfastcgi.py 3.0.0 initialized
+2026-02-13 13:11:56.021669: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 13:11:56.024299: wfastcgi.py 3.0.0 initialized
+2026-02-13 13:38:51.326831: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 13:38:51.334582: wfastcgi.py 3.0.0 initialized
+2026-02-13 13:38:54.208776: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 13:38:54.213384: wfastcgi.py 3.0.0 initialized
+2026-02-13 16:25:40.321354: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-13 16:25:40.322878: Running on_exit tasks
+2026-02-13 16:25:40.324376: wfastcgi.py 3.0.0 closed
+2026-02-13 16:28:04.358129: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 16:28:04.359858: wfastcgi.py 3.0.0 initialized
+2026-02-13 16:51:04.622454: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 16:51:04.627186: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:10:16.267871: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:10:16.270932: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:10:32.115902: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:10:32.119303: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:12:59.078558: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-13 19:12:59.080365: Running on_exit tasks
+2026-02-13 19:12:59.083002: wfastcgi.py 3.0.0 closed
+2026-02-13 19:12:59.118813: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-13 19:12:59.120771: Running on_exit tasks
+2026-02-13 19:12:59.122314: wfastcgi.py 3.0.0 closed
+2026-02-13 19:24:57.387360: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:24:57.390322: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:51:44.484627: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:51:44.486055: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:54:46.122373: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:54:46.125447: wfastcgi.py 3.0.0 initialized
+2026-02-13 19:57:15.904783: wfastcgi.py exiting because BPerformance\settings.py has changed, matching .*((\.py)|(\.config))$
+2026-02-13 19:57:15.907000: Running on_exit tasks
+2026-02-13 19:58:57.496020: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 19:58:57.504400: wfastcgi.py 3.0.0 initialized
+2026-02-13 20:07:22.945678: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 20:07:22.974897: wfastcgi.py 3.0.0 initialized
+2026-02-13 20:25:29.165721: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 20:25:29.169609: wfastcgi.py 3.0.0 initialized
+2026-02-13 20:34:21.100650: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 20:34:21.110380: wfastcgi.py 3.0.0 initialized
+2026-02-13 22:28:27.268585: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 22:28:27.271213: wfastcgi.py 3.0.0 initialized
+2026-02-13 22:50:06.062995: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 22:50:06.066172: wfastcgi.py 3.0.0 initialized
+2026-02-13 22:50:07.066097: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-13 22:50:07.077953: wfastcgi.py 3.0.0 initialized
+2026-02-14 03:41:36.176991: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 03:41:36.178757: wfastcgi.py 3.0.0 initialized
+2026-02-14 04:22:39.194562: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 04:22:39.196430: wfastcgi.py 3.0.0 initialized
+2026-02-14 05:05:46.520854: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 05:05:46.524037: wfastcgi.py 3.0.0 initialized
+2026-02-14 06:36:10.897067: Unhandled exception in wfastcgi.py: Traceback (most recent call last):
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 774, in main
+    record = read_fastcgi_record(fcgi_stream)
+  File "C:\inetpub\wwwroot\BPerformance\venv\Lib\site-packages\wfastcgi.py", line 158, in read_fastcgi_record
+    data = stream.read(8)     # read record
+OSError: [Errno 22] Invalid argument
+2026-02-14 06:37:41.322787: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 06:37:41.325045: wfastcgi.py 3.0.0 initialized
+2026-02-14 11:03:35.242476: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 11:03:35.244063: wfastcgi.py 3.0.0 initialized
+2026-02-14 15:03:19.473756: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 15:03:19.477673: wfastcgi.py 3.0.0 initialized
+2026-02-14 19:45:13.109763: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 19:45:13.112014: wfastcgi.py 3.0.0 initialized
+2026-02-14 19:50:37.584555: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 19:50:37.586414: wfastcgi.py 3.0.0 initialized
+2026-02-14 19:58:35.029470: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 19:58:35.030720: wfastcgi.py 3.0.0 initialized
+2026-02-14 21:58:17.580456: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 21:58:17.582419: wfastcgi.py 3.0.0 initialized
+2026-02-14 21:58:21.400359: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 21:58:21.403158: wfastcgi.py 3.0.0 initialized
+2026-02-14 22:28:39.730006: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 22:28:39.732329: wfastcgi.py 3.0.0 initialized
+2026-02-14 22:35:58.042289: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 22:35:58.048584: wfastcgi.py 3.0.0 initialized
+2026-02-14 22:58:47.198236: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-14 22:58:47.200229: wfastcgi.py 3.0.0 initialized
+2026-02-15 03:26:53.970158: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 03:26:53.972696: wfastcgi.py 3.0.0 initialized
+2026-02-15 03:26:55.529624: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 03:26:55.641424: wfastcgi.py 3.0.0 initialized
+2026-02-15 03:46:33.587203: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 03:46:33.589422: wfastcgi.py 3.0.0 initialized
+2026-02-15 04:16:32.737217: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 04:16:32.738802: wfastcgi.py 3.0.0 initialized
+2026-02-15 04:28:17.915949: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 04:28:17.918035: wfastcgi.py 3.0.0 initialized
+2026-02-15 09:42:58.416314: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 09:42:58.417643: wfastcgi.py 3.0.0 initialized
+2026-02-15 10:51:57.548697: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 10:51:57.553103: wfastcgi.py 3.0.0 initialized
+2026-02-15 12:44:33.048479: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 12:44:33.050077: wfastcgi.py 3.0.0 initialized
+2026-02-15 18:09:53.991228: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 18:09:53.993386: wfastcgi.py 3.0.0 initialized
+2026-02-15 23:21:12.560891: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-15 23:21:12.566335: wfastcgi.py 3.0.0 initialized
+2026-02-16 02:07:13.726100: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 02:07:13.729635: wfastcgi.py 3.0.0 initialized
+2026-02-16 02:26:44.009122: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 02:26:44.026938: wfastcgi.py 3.0.0 initialized
+2026-02-16 03:29:56.504089: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 03:29:56.505523: wfastcgi.py 3.0.0 initialized
+2026-02-16 04:45:18.223308: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 04:45:18.225429: wfastcgi.py 3.0.0 initialized
+2026-02-16 04:54:38.733308: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 04:54:38.734820: wfastcgi.py 3.0.0 initialized
+2026-02-16 07:29:17.677232: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 07:29:17.679002: wfastcgi.py 3.0.0 initialized
+2026-02-16 10:13:17.872065: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 10:13:17.874110: wfastcgi.py 3.0.0 initialized
+2026-02-16 11:53:46.802620: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 11:53:46.807023: wfastcgi.py 3.0.0 initialized
+2026-02-16 14:51:52.863562: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 14:51:52.865783: wfastcgi.py 3.0.0 initialized
+2026-02-16 14:51:52.886034: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 14:51:52.887801: wfastcgi.py 3.0.0 initialized
+2026-02-16 16:22:33.199162: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 16:22:33.208424: wfastcgi.py 3.0.0 initialized
+2026-02-16 17:39:05.372760: wfastcgi.py will restart when files in C:\inetpub\wwwroot\BPerformance\ are changed: .*((\.py)|(\.config))$
+2026-02-16 17:39:05.375002: wfastcgi.py 3.0.0 initialized

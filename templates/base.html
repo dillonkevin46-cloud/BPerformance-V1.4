@@ -191,6 +191,12 @@
             <a href="{% url 'staff_index' %}" class="nav-link {% if 'staff' in request.path %}active{% endif %}">
                 <i class="bi bi-people"></i> Staff Profiles
             </a>
+            <a href="{% url 'scheduler_dashboard' %}" class="nav-link {% if 'scheduler' in request.path %}active{% endif %}">
+                <i class="bi bi-calendar-event"></i> Scheduler
+            </a>
+            <a href="{% url 'checkform_admin' %}" class="nav-link {% if 'checkform' in request.path %}active{% endif %}">
+                <i class="bi bi-ui-checks"></i> Check Forms
+            </a>
             <a href="{% url 'settings' %}" class="nav-link {% if 'settings' in request.path %}active{% endif %}">
                 <i class="bi bi-gear"></i> Settings
             </a>
@@ -223,7 +229,7 @@
                         <p class="mb-0">
                             &copy; {% now "Y" %} <strong>BPerformance</strong>. All rights reserved. 
                             <span class="mx-2">|</span> 
-                            <small>System v1.3</small>
+                            <small>System v1.4</small>
                         </p>
                     </div>
                 </div>

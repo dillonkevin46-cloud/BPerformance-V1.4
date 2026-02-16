@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Schedule Change History</h2>
+    <a href="{% url 'scheduler_dashboard' %}" class="btn btn-secondary">Back to Scheduler</a>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Action</th>
+            <th>Staff / Slot</th>
+            <th>Requested By</th>
+            <th>Approved By</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp|date:"Y-m-d H:i" }}</td>
+            <td>
+                {% if log.action_type == 'CREATE' %}<span class="badge bg-primary">Create</span>
+                {% elif log.action_type == 'UPDATE' %}<span class="badge bg-warning text-dark">Update</span>
+                {% else %}<span class="badge bg-danger">Delete</span>{% endif %}
+            </td>
+            <td>
+                <strong>{{ log.slot.staff.full_name }}</strong><br>
+                <small>{{ log.slot.start_time|date:"D d M H:i" }} - {{ log.slot.end_time|date:"H:i" }}</small><br>
+                <small class="text-muted">{{ log.slot.location }}</small>
+            </td>
+            <td>{{ log.requested_by.username }}</td>
+            <td>
+                {% if log.approved_by %}
+                    {{ log.approved_by.username }}
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </td>
+            <td>{{ log.comments }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

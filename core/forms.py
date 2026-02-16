@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import (
     StaffProfile, Department, Client, Category, RatingCriteria, 
-    StaffWarning, StaffNote
+    StaffWarning, StaffNote, ScheduleSlot, CheckFormTemplate, CheckFormFolder
 )
 
 # --- CONFIG FORMS ---
@@ -105,3 +105,37 @@ class WeeklyReportForm(forms.Form):
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'boss@company.com, manager@client.com'}),
         help_text="Separate multiple emails with a comma."
     )
+
+# --- SCHEDULER FORMS ---
+
+class ScheduleSlotForm(forms.ModelForm):
+    class Meta:
+        model = ScheduleSlot
+        fields = ['staff', 'location', 'start_time', 'end_time', 'description']
+        widgets = {
+            'staff': forms.Select(attrs={'class': 'form-select'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+# --- CHECK FORM FORMS ---
+
+class CheckFormTemplateForm(forms.ModelForm):
+    class Meta:
+        model = CheckFormTemplate
+        fields = ['title', 'instructions', 'has_general_comment']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'instructions': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'has_general_comment': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+class CheckFormFolderForm(forms.ModelForm):
+    class Meta:
+        model = CheckFormFolder
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }

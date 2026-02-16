@@ -1,0 +1,13 @@
+<p>A schedule change requires your approval.</p>
+<p><strong>Action:</strong> {{ log.get_action_type_display }}</p>
+<p><strong>Staff:</strong> {{ slot.staff.full_name }}</p>
+<p><strong>Time:</strong> {{ slot.start_time }} - {{ slot.end_time }}</p>
+<p><strong>Location:</strong> {{ slot.location }}</p>
+<p><strong>Description:</strong> {{ slot.description }}</p>
+<p><strong>Requested By:</strong> {{ log.requested_by.username }}</p>
+
+<p>
+    <a href="{{ host }}{% url 'scheduler_approval_landing' log.id 'approve' %}" style="background-color: green; color: white; padding: 10px; text-decoration: none; border-radius: 5px; margin-right: 10px;">APPROVE</a>
+    <a href="{{ host }}{% url 'scheduler_approval_landing' log.id 'reject' %}" style="background-color: red; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">REJECT</a>
+</p>
+<p>Please click one of the buttons above to log in and provide a mandatory comment.</p>

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Create Template</div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.instructions.label_tag }}
+                        {{ form.instructions }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.has_general_comment }}
+                            <label class="form-check-label">Include General Comment Area</label>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h6>Checklist Items</h6>
+                    <div id="items-container"></div>
+                    <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addItem()">+ Add Item</button>
+
+                    <input type="hidden" name="items_json" id="items_json">
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" onclick="submitForm()">Save Template</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h3>Existing Templates</h3>
+        <ul class="list-group">
+            {% for t in templates %}
+            <li class="list-group-item">
+                <strong>{{ t.title }}</strong>
+                <span class="badge bg-secondary float-end">{{ t.items|length }} items</span>
+                <p class="small text-muted mb-0">{{ t.instructions }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    let items = [];
+
+    function addItem() {
+        items.push({label: "", required: false});
+        renderItems();
+    }
+
+    function removeItem(index) {
+        items.splice(index, 1);
+        renderItems();
+    }
+
+    function updateItem(index, key, value) {
+        items[index][key] = value;
+    }
+
+    function renderItems() {
+        const container = document.getElementById('items-container');
+        container.innerHTML = "";
+        items.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = "input-group mb-2";
+            div.innerHTML = `
+                <input type="text" class="form-control" placeholder="Item Label" value="${item.label}" onchange="updateItem(${index}, 'label', this.value)">
+                <button type="button" class="btn btn-outline-danger" onclick="removeItem(${index})">X</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function submitForm() {
+        document.getElementById('items_json').value = JSON.stringify(items);
+    }
+</script>
+{% endblock %}

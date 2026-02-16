@@ -1,0 +1,41 @@
+{% for ticket in tickets %}
+<tr>
+    <td>{{ ticket.report.date|date:"Y-m-d" }}</td>
+    <td>
+        <div class="fw-bold">{{ ticket.client.name }}</div>
+        <span class="badge bg-light text-secondary border">{{ ticket.category.name }}</span>
+    </td>
+    <td>
+        <span class="badge bg-light text-dark border">{{ ticket.get_work_type_display }}</span>
+        {% if ticket.work_location == 'HOME' %}
+            <i class="bi bi-house-door text-info" title="Home"></i>
+        {% elif ticket.work_location == 'HYBRID' %}
+            <i class="bi bi-car-front text-warning" title="Hybrid"></i>
+        {% endif %}
+    </td>
+    <td style="max-width: 400px;">
+        {{ ticket.description|truncatechars:100 }}
+        {% if ticket.attachments.exists %}
+            <i class="bi bi-paperclip text-muted ms-1"></i>
+        {% endif %}
+    </td>
+    <td>
+        {{ ticket.start_time|time:"H:i" }} - {{ ticket.end_time|time:"H:i" }}<br>
+        <small class="text-muted">{{ ticket.duration_display }}</small>
+    </td>
+    <td>
+        {% if ticket.status == 'COMP' %} <span class="badge bg-success">Completed</span>
+        {% elif ticket.status == 'BLOCK' %} <span class="badge bg-danger">Blocker</span>
+        {% elif ticket.status == 'PEND' %} <span class="badge bg-warning text-dark">Pending</span>
+        {% elif ticket.status == 'HOLD' %} <span class="badge bg-secondary">On Hold</span>
+        {% elif ticket.status == 'CALL' %} <span class="badge bg-warning text-dark border border-dark">Call Back</span>
+        {% elif ticket.status == 'WAIT_ST' %} <span class="badge bg-info text-dark">Await Staff</span>
+        {% else %} <span class="badge bg-light text-dark border">Await Client</span>
+        {% endif %}
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center text-muted py-3">No tickets found.</td>
+</tr>
+{% endfor %}

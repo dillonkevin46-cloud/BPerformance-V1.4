@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ submission.template.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5 mb-5">
+        <div class="card shadow-sm mx-auto" style="max-width: 700px;">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h3 class="mb-0">{{ submission.template.title }}</h3>
+            </div>
+            <div class="card-body p-4">
+                <p class="lead">{{ submission.template.instructions }}</p>
+                <hr>
+
+                <form method="POST" action="{% url 'checkform_submit' submission.token %}">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Your Name</label>
+                        <input type="text" name="submitted_by_name" class="form-control" required placeholder="John Doe">
+                    </div>
+
+                    <h5 class="mb-3">Checklist</h5>
+                    {% for item in submission.template.items %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="check_{{ forloop.counter0 }}" id="check_{{ forloop.counter0 }}">
+                                <label class="form-check-label fw-bold" for="check_{{ forloop.counter0 }}">{{ item.label }}</label>
+                            </div>
+                            <input type="text" name="comment_{{ forloop.counter0 }}" class="form-control form-control-sm" placeholder="Add a comment (optional)">
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% if submission.template.has_general_comment %}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">General Comments</label>
+                        <textarea name="general_comment" class="form-control" rows="3"></textarea>
+                    </div>
+                    {% endif %}
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

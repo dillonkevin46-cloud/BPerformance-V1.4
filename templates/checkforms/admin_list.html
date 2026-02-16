@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="d-grid gap-2 mb-3">
+            <a href="{% url 'checkform_builder' %}" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> Form Builder
+            </a>
+            <a href="{% url 'checkform_share' %}" class="btn btn-success">
+                <i class="bi bi-send"></i> Send Form
+            </a>
+        </div>
+
+        <div class="list-group mb-3">
+            <a href="{% url 'checkform_admin' %}" class="list-group-item list-group-item-action {% if not selected_folder_id %}active{% endif %}">
+                <i class="bi bi-inbox"></i> Inbox <span class="badge bg-light text-dark float-end">{{ inbox.count }}</span>
+            </a>
+            {% for folder in folders %}
+            <a href="?folder={{ folder.id }}" class="list-group-item list-group-item-action {% if selected_folder_id == folder.id %}active{% endif %}">
+                <i class="bi bi-folder"></i> {{ folder.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="create_folder" value="1">
+            <div class="input-group">
+                <input type="text" name="name" class="form-control form-control-sm" placeholder="New Folder">
+                <button class="btn btn-outline-secondary btn-sm" type="submit">+</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-9">
+        <h3>{% if selected_folder_id %}Folder View{% else %}Inbox{% endif %}</h3>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Template</th>
+                    <th>Recipient / Submitter</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in selected_folder_submissions|default:inbox %}
+                <tr>
+                    <td>{{ sub.submitted_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ sub.template.title }}</td>
+                    <td>
+                        {{ sub.recipient_email }}<br>
+                        <small class="text-muted">{{ sub.submitted_by_name }}</small>
+                    </td>
+                    <td><span class="badge bg-success">Completed</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewSubModal{{ sub.id }}">View</button>
+                        {% if not sub.folder %}
+                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#fileSubModal{{ sub.id }}">File</button>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <!-- View Modal -->
+                <div class="modal fade" id="viewSubModal{{ sub.id }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ sub.template.title }} - {{ sub.submitted_by_name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Answers:</h6>
+                                <ul class="list-group mb-3">
+                                    {% for ans in sub.content.answers %}
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" {% if ans.checked %}checked{% endif %} disabled>
+                                            <label class="form-check-label">{{ ans.label }}</label>
+                                        </div>
+                                        {% if ans.comment %}
+                                        <p class="small text-muted mb-0 ms-4">Note: {{ ans.comment }}</p>
+                                        {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <h6>General Comment:</h6>
+                                <p>{{ sub.content.general_comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Modal -->
+                <div class="modal fade" id="fileSubModal{{ sub.id }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <form method="POST" class="modal-content">
+                            {% csrf_token %}
+                            <input type="hidden" name="file_submission" value="1">
+                            <input type="hidden" name="submission_id" value="{{ sub.id }}">
+                            <div class="modal-header">
+                                <h5 class="modal-title">File Submission</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Select Folder:</label>
+                                <select name="folder_id" class="form-select">
+                                    {% for f in folders %}
+                                    <option value="{{ f.id }}">{{ f.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {% empty %}
+                <tr><td colspan="5">No submissions found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

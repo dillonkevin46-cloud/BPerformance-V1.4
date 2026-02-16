@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-{% if action == 'approve' %}success{% else %}danger{% endif %} text-white">
+            Confirm {{ action|title }}
+        </div>
+        <div class="card-body">
+            <p>You are about to <strong>{{ action }}</strong> the following change:</p>
+            <ul>
+                <li>Action: {{ log.get_action_type_display }}</li>
+                <li>Staff: {{ log.slot.staff.full_name }}</li>
+                <li>Time: {{ log.slot.start_time }} - {{ log.slot.end_time }}</li>
+                <li>Location: {{ log.slot.location }}</li>
+            </ul>
+
+            <form method="POST" action="{% url 'scheduler_finalize_approval' log.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+                <div class="mb-3">
+                    <label class="form-label">Mandatory Comment / Reason</label>
+                    <textarea name="comments" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-{% if action == 'approve' %}success{% else %}danger{% endif %}">
+                    Confirm {{ action|title }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

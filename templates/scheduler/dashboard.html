@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-3 align-items-center">
+    <div class="col-md-6">
+        <h2 class="mb-0">Schedule: {{ current_date|date:"D, d M Y" }}</h2>
+    </div>
+    <div class="col-md-6 text-end">
+         <form method="GET" class="d-inline-block me-2">
+             <input type="date" name="date" class="form-control form-control-sm d-inline-block w-auto" value="{{ current_date|date:'Y-m-d' }}" onchange="this.form.submit()">
+         </form>
+         <a href="?date={% now 'Y-m-d' %}" class="btn btn-outline-secondary btn-sm">Today</a>
+         <a href="{% url 'scheduler_history' %}" class="btn btn-info btn-sm text-white position-relative">
+            History
+            {% if changes_count > 0 %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ changes_count }}
+            </span>
+            {% endif %}
+         </a>
+    </div>
+</div>
+
+<div class="row g-3 flex-nowrap overflow-auto pb-3">
+    <!-- Staff Column -->
+    {% for staff in staff_members %}
+    <div class="col-md-3" style="min-width: 250px;">
+        <div class="card shadow-sm h-100 bg-light">
+            <div class="card-header fw-bold text-center bg-white sticky-top">
+                {{ staff.full_name }}
+            </div>
+            <div class="card-body p-2" style="min-height: 400px;">
+
+                <!-- Add Button -->
+                <button class="btn btn-sm btn-outline-primary w-100 mb-3 dashed-border"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addSlotModal"
+                        onclick="prepareAddModal('{{ staff.id }}', '{{ staff.full_name }}')">
+                    <i class="bi bi-plus-circle"></i> Add Slot
+                </button>
+
+                <!-- Slots -->
+                {% for slot in slots %}
+                    {% if slot.staff == staff %}
+                    <div class="card mb-2 border-start border-4 shadow-sm slot-card
+                        {% if slot.status == 'PENDING' %}border-warning bg-warning-subtle{% elif slot.status == 'REJECTED' %}border-danger bg-danger-subtle{% else %}border-success bg-white{% endif %}"
+                         style="cursor: pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#editSlotModal"
+                         onclick="prepareEditModal('{{ slot.id }}', '{{ slot.start_time|date:'Y-m-d\\TH:i' }}', '{{ slot.end_time|date:'Y-m-d\\TH:i' }}', '{{ slot.location }}', '{{ slot.description|escapejs }}')">
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <small class="fw-bold">{{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}</small>
+                                {% if slot.status == 'PENDING' %}<i class="bi bi-hourglass-split text-warning" title="Pending Approval"></i>{% endif %}
+                                {% if slot.status == 'REJECTED' %}<i class="bi bi-x-circle text-danger" title="Rejected"></i>{% endif %}
+                            </div>
+                            <div class="small text-truncate">{{ slot.location }}</div>
+                            <div class="small text-muted text-truncate">{{ slot.description }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addSlotModal">
+    <div class="modal-dialog">
+        <form method="POST" action="{% url 'htmx_add_schedule_slot' %}" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title">Add Slot for <span id="add_staff_name"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="staff" id="add_staff_id">
+                <div class="mb-3">
+                    <label class="form-label">Location / Client</label>
+                    <input type="text" name="location" class="form-control" required>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Start</label>
+                        <input type="datetime-local" name="start_time" class="form-control" required value="{{ current_date|date:'Y-m-d' }}T09:00">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">End</label>
+                        <input type="datetime-local" name="end_time" class="form-control" required value="{{ current_date|date:'Y-m-d' }}T10:00">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editSlotModal">
+    <div class="modal-dialog">
+        <form method="POST" id="editSlotForm" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title">Edit / Move Slot</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small">Any changes will require approval.</p>
+                <div class="mb-3">
+                    <label class="form-label">Location / Client</label>
+                    <input type="text" name="location" id="edit_location" class="form-control" readonly>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Start</label>
+                        <input type="datetime-local" name="start_time" id="edit_start" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">End</label>
+                        <input type="datetime-local" name="end_time" id="edit_end" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" id="edit_description" class="form-control" rows="2" readonly></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-danger" onclick="requestDelete()">Request Delete</button>
+                <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Request Change</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function prepareAddModal(staffId, staffName) {
+        document.getElementById('add_staff_id').value = staffId;
+        document.getElementById('add_staff_name').innerText = staffName;
+    }
+
+    function prepareEditModal(slotId, start, end, loc, desc) {
+        // Assume action is set to move by default
+        document.getElementById('editSlotForm').action = "/scheduler/move/" + slotId + "/";
+        // Store slotId in a data attribute for delete
+        document.getElementById('editSlotForm').dataset.slotId = slotId;
+
+        document.getElementById('edit_start').value = start;
+        document.getElementById('edit_end').value = end;
+        document.getElementById('edit_location').value = loc;
+        document.getElementById('edit_description').value = desc;
+    }
+
+    function requestDelete() {
+        if(confirm('Request approval to DELETE this slot?')) {
+            const form = document.getElementById('editSlotForm');
+            const slotId = form.dataset.slotId;
+            form.action = "/scheduler/delete/" + slotId + "/";
+            form.submit();
+        }
+    }
+</script>
+
+<style>
+    .dashed-border {
+        border-style: dashed !important;
+    }
+    .slot-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s;
+    }
+</style>
+{% endblock %}

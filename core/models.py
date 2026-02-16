@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+import uuid
 
 # --- 1. CONFIGURATION MODELS ---
 
@@ -172,3 +173,83 @@ class StaffNote(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self): return f"Note for {self.staff} on {self.date.date()}"
+
+# --- 6. SCHEDULER SYSTEM ---
+
+class ScheduleSlot(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending Approval'),
+        ('APPROVED', 'Approved'),
+        ('REJECTED', 'Rejected'),
+        ('PENDING_DELETE', 'Pending Deletion'),
+    ]
+
+    staff = models.ForeignKey(StaffProfile, on_delete=models.CASCADE, related_name='schedule_slots')
+    location = models.CharField(max_length=100) # Can be "Office", "Home", or Client Name
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self): return f"{self.staff} @ {self.start_time}"
+
+class ScheduleChangeLog(models.Model):
+    ACTION_CHOICES = [
+        ('CREATE', 'Created Slot'),
+        ('UPDATE', 'Updated Slot'),
+        ('DELETE', 'Deleted Slot'),
+    ]
+
+    slot = models.ForeignKey(ScheduleSlot, on_delete=models.SET_NULL, null=True, related_name='logs')
+    action_type = models.CharField(max_length=10, choices=ACTION_CHOICES)
+    requested_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='schedule_requests')
+    approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='schedule_approvals')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    comments = models.TextField(blank=True)
+
+    # Snapshot data in case of deletion or revert needed
+    previous_start = models.DateTimeField(null=True, blank=True)
+    previous_end = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self): return f"{self.action_type} - {self.timestamp}"
+
+# --- 7. CHECK FORM SYSTEM ---
+
+class CheckFormFolder(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self): return self.name
+    class Meta: verbose_name_plural = "Check Form Folders"
+
+class CheckFormTemplate(models.Model):
+    title = models.CharField(max_length=100)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    items = models.JSONField(default=list) # List of {"label": "Check ABC", "required": true}
+    instructions = models.TextField(blank=True)
+    has_general_comment = models.BooleanField(default=True)
+
+    def __str__(self): return self.title
+
+class CheckFormSubmission(models.Model):
+    STATUS_CHOICES = [
+        ('SENT', 'Sent / Pending'),
+        ('COMPLETED', 'Completed'),
+        ('FILED', 'Filed'),
+    ]
+
+    template = models.ForeignKey(CheckFormTemplate, on_delete=models.PROTECT, related_name='submissions')
+    recipient_email = models.EmailField()
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='SENT')
+
+    submitted_at = models.DateTimeField(null=True, blank=True)
+    submitted_by_name = models.CharField(max_length=100, blank=True)
+
+    content = models.JSONField(null=True, blank=True) # The actual answers
+    folder = models.ForeignKey(CheckFormFolder, on_delete=models.SET_NULL, null=True, blank=True, related_name='filed_forms')
+
+    def __str__(self): return f"{self.template} - {self.recipient_email}"

@@ -14,9 +14,9 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '[::1]',
-    '169.239.180.137',  # Optional: Your IP address
-    'bperformance.co.za',      # Your Domain
-    'www.bperformance.co.za',  # Your WWW Domain
+    '',  # Optional: Your IP address
+    '',      # Your Domain
+    '',  # Your WWW Domain
 ]
 
 # Application definition
@@ -110,16 +110,15 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
-# OPTION 1: For Testing (Prints email to your terminal window)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# BPerformance/settings.py
 
-# OPTION 2: For Production (Uncomment and fill this when ready for real emails)
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  # or smtp.gmail.com
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'dillonkevin46@gmail.com'
-# EMAIL_HOST_PASSWORD = 'Mortal@gmail@6678'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dillonkevin46@gmail.com'
+EMAIL_HOST_PASSWORD = 'wotl akgk xgil lmwy'  # <-- PASTE YOUR 16-CHAR APP PASSWORD HERE
+APPROVER_EMAIL = 'dillonkevin46@gmail.com'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

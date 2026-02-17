@@ -189,7 +189,9 @@ class ScheduleSlot(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     description = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
+    
+    # FIXED: Increased max_length from 10 to 20 to fit 'PENDING_DELETE'
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

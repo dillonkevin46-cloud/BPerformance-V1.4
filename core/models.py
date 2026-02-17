@@ -189,7 +189,7 @@ class ScheduleSlot(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     description = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='PENDING')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -226,9 +226,17 @@ class CheckFormFolder(models.Model):
 
 class CheckFormTemplate(models.Model):
     title = models.CharField(max_length=100)
+    company_logo = models.ImageField(upload_to='company_logos/', blank=True, null=True) # Feature 2: Added Logo
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    items = models.JSONField(default=list) # List of {"label": "Check ABC", "required": true}
+
+    # JSON Structure for Items:
+    # Type A (Check & Note):
+    #   {"type": "check_note", "label": "Is Safe?", "required": true}
+    # Type B (Fixed Table):
+    #   {"type": "fixed_table", "label": "Stock", "columns": [{"name": "Item", "type": "text"}, {"name": "Qty", "type": "text"}, {"name": "Count", "type": "input"}], "rows": [["Widget", "10", ""], ...]}
+    items = models.JSONField(default=list)
+
     instructions = models.TextField(blank=True)
     has_general_comment = models.BooleanField(default=True)
 

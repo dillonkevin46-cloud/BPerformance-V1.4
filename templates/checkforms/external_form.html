@@ -8,8 +8,11 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5 mb-5">
-        <div class="card shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="card shadow-sm mx-auto" style="max-width: 800px;">
             <div class="card-header bg-primary text-white text-center py-3">
+                {% if submission.template.company_logo %}
+                    <img src="{{ submission.template.company_logo.url }}" alt="Logo" style="max-height: 50px; margin-bottom: 10px;">
+                {% endif %}
                 <h3 class="mb-0">{{ submission.template.title }}</h3>
             </div>
             <div class="card-body p-4">
@@ -20,19 +23,72 @@
                     {% csrf_token %}
 
                     <div class="mb-4">
-                        <label class="form-label fw-bold">Your Name</label>
+                        <label class="form-label fw-bold">Your Name <span class="text-danger">*</span></label>
                         <input type="text" name="submitted_by_name" class="form-control" required placeholder="John Doe">
                     </div>
 
-                    <h5 class="mb-3">Checklist</h5>
+                    <h5 class="mb-3">Checklist Items</h5>
                     {% for item in submission.template.items %}
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" name="check_{{ forloop.counter0 }}" id="check_{{ forloop.counter0 }}">
-                                <label class="form-check-label fw-bold" for="check_{{ forloop.counter0 }}">{{ item.label }}</label>
-                            </div>
-                            <input type="text" name="comment_{{ forloop.counter0 }}" class="form-control form-control-sm" placeholder="Add a comment (optional)">
+
+                            <!-- ITEM HEADER -->
+                            <h6 class="fw-bold">{{ item.label }}</h6>
+
+                            <!-- RENDER BASED ON TYPE -->
+
+                            <!-- TYPE A: CHECK & NOTE -->
+                            {% if item.type == 'check_note' %}
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="check_{{ forloop.counter0 }}">
+                                    <label class="form-check-label">Yes / Confirmed</label>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="small text-muted">Mandatory Note <span class="text-danger">*</span></label>
+                                    <input type="text" name="note_{{ forloop.counter0 }}" class="form-control" required placeholder="Reason / Observation">
+                                </div>
+
+                            <!-- TYPE B: FIXED TABLE -->
+                            {% elif item.type == 'fixed_table' %}
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                        <thead class="table-light">
+                                            <tr>
+                                                {% for col in item.columns %}
+                                                <th>{{ col.name }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in item.rows %}
+                                            <tr>
+                                                <!-- We assume the last column is the input, others are text from the row array -->
+                                                {% for cell in row %}
+                                                    <!-- If it's the last column (or blank in definition), render input?
+                                                         Actually, let's use the column definition index -->
+                                                    <td>
+                                                        {% if forloop.last %} <!-- Simple logic: Last col is input -->
+                                                            <input type="text" name="table_{{ forloop.parentloop.parentloop.counter0 }}_row_{{ forloop.parentloop.counter0 }}" class="form-control form-control-sm">
+                                                        {% else %}
+                                                            {{ cell }}
+                                                        {% endif %}
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            <!-- LEGACY / SIMPLE -->
+                            {% else %}
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="check_{{ forloop.counter0 }}" id="check_{{ forloop.counter0 }}">
+                                    <label class="form-check-label" for="check_{{ forloop.counter0 }}">Complete</label>
+                                </div>
+                                <input type="text" name="comment_{{ forloop.counter0 }}" class="form-control form-control-sm" placeholder="Add a comment (optional)">
+                            {% endif %}
+
                         </div>
                     </div>
                     {% endfor %}

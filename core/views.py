@@ -10,6 +10,11 @@ from django.core.mail import EmailMessage
 from datetime import datetime, timedelta
 import weasyprint
 import json
+import io
+import base64
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 # IMPORT MODELS
 from .models import (
@@ -59,6 +64,34 @@ def export_staff_pdf_view(request, staff_id):
         mn = int(m % 60)
         return f"{h}h {mn}m" if h > 0 else f"{mn}m"
 
+    # --- FEATURE 3: Matplotlib Graph ---
+    # Query Metrics
+    criteria_stats = StaffMetric.objects.filter(staff=staff, report__date__range=[start_date, end_date]) \
+        .values('criteria__name') \
+        .annotate(avg_score=Avg('score'))
+
+    labels = [item['criteria__name'] for item in criteria_stats]
+    scores = [round(item['avg_score'], 1) for item in criteria_stats]
+
+    graph = None
+    if labels:
+        plt.figure(figsize=(6, 4))
+        plt.bar(labels, scores, color='#3498db')
+        plt.xlabel('Criteria')
+        plt.ylabel('Average Score (1-10)')
+        plt.title('Performance Ratings')
+        plt.ylim(0, 10)
+        plt.tight_layout()
+
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        plt.close() # Clear memory
+
+        graph = base64.b64encode(image_png).decode('utf-8')
+
     context = {
         'staff': staff,
         'tickets': tickets,
@@ -68,7 +101,8 @@ def export_staff_pdf_view(request, staff_id):
         'unique_clients': unique_clients,
         'avg_resolution': fmt_mins(avg_resolution),
         'avg_response': fmt_mins(avg_response),
-        'host': request.build_absolute_uri('/')[:-1] # For images
+        'host': request.build_absolute_uri('/')[:-1], # For images
+        'graph': graph # Pass base64 string
     }
 
     # Generate PDF
@@ -816,6 +850,68 @@ def send_approval_email(request, log):
     email.content_subtype = "html"
     email.send()
 
+@login_required
+def scheduler_generate_pdf_view(request, date_str):
+    try: target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError: target_date = timezone.now().date()
+
+    # Feature 1: Get logs for this day
+    logs = ScheduleChangeLog.objects.filter(timestamp__date=target_date).order_by('timestamp')
+
+    html_string = f"""
+    <html>
+    <head><style>
+        body {{ font-family: sans-serif; }}
+        table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
+        th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+        th {{ background-color: #f2f2f2; }}
+    </style></head>
+    <body>
+        <h1>Scheduler Change Log</h1>
+        <h3>Date: {target_date}</h3>
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Action</th>
+                <th>Staff Modified</th>
+                <th>Approved By</th>
+                <th>Details (Old -> New)</th>
+            </tr>
+    """
+
+    for log in logs:
+        details = ""
+        if log.action_type == 'UPDATE' and log.previous_start:
+             details = f"Time: {log.previous_start.strftime('%H:%M')} -> {log.slot.start_time.strftime('%H:%M')}"
+        elif log.action_type == 'CREATE':
+             details = f"Created: {log.slot.start_time.strftime('%H:%M')} - {log.slot.end_time.strftime('%H:%M')}"
+        elif log.action_type == 'DELETE':
+             details = "Slot Deleted"
+
+        approver = log.approved_by.username if log.approved_by else "Pending"
+
+        html_string += f"""
+            <tr>
+                <td>{log.timestamp.strftime('%H:%M')}</td>
+                <td>{log.get_action_type_display()}</td>
+                <td>{log.slot.staff.full_name}</td>
+                <td>{approver}</td>
+                <td>{details}</td>
+            </tr>
+        """
+
+    html_string += """
+        </table>
+    </body>
+    </html>
+    """
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Schedule_Log_{target_date}.pdf"'
+    weasyprint.HTML(string=html_string).write_pdf(response)
+    return response
+
+
 # --- 9. CHECK FORMS ---
 
 @login_required
@@ -862,12 +958,12 @@ def checkform_builder_view(request):
     form = CheckFormTemplateForm()
 
     if request.method == 'POST':
-        form = CheckFormTemplateForm(request.POST)
+        form = CheckFormTemplateForm(request.POST, request.FILES) # Added FILES for logo
         if form.is_valid():
             template = form.save(commit=False)
             template.created_by = request.user
             # Items
-            items_json = request.POST.get('items_json') # Expecting JSON string: [{"label": "...", "required": true}]
+            items_json = request.POST.get('items_json')
             try:
                 template.items = json.loads(items_json)
             except:
@@ -923,17 +1019,51 @@ def checkform_submit_view(request, token):
     if submission.status in ['COMPLETED', 'FILED']:
         return HttpResponse("Already submitted.")
 
-    # Process Form
+    # Process Form (Updated for Type A and B)
     items = submission.template.items
     answers = []
+
+    # 1. Simple Loop through posted data based on item index
+    # We need to handle Type A (check + note) and Type B (table input)
+
     for idx, item in enumerate(items):
-        is_checked = request.POST.get(f"check_{idx}") == 'on'
-        comment = request.POST.get(f"comment_{idx}")
-        answers.append({
-            'label': item['label'],
-            'checked': is_checked,
-            'comment': comment
-        })
+        item_type = item.get('type', 'simple') # default legacy
+
+        if item_type == 'check_note':
+            is_checked = request.POST.get(f"check_{idx}") == 'on'
+            note = request.POST.get(f"note_{idx}")
+            answers.append({
+                'label': item['label'],
+                'type': 'check_note',
+                'checked': is_checked,
+                'note': note
+            })
+
+        elif item_type == 'fixed_table':
+            # Rows are fixed, user inputs last column?
+            # Or table structure?
+            # Let's assume the template has "rows" and we want to capture an input for each row
+            table_rows = item.get('rows', [])
+            row_answers = []
+            for r_idx, row in enumerate(table_rows):
+                val = request.POST.get(f"table_{idx}_row_{r_idx}")
+                row_answers.append(val)
+
+            answers.append({
+                'label': item['label'],
+                'type': 'fixed_table',
+                'row_inputs': row_answers
+            })
+
+        else: # Legacy Simple Check
+            is_checked = request.POST.get(f"check_{idx}") == 'on'
+            comment = request.POST.get(f"comment_{idx}")
+            answers.append({
+                'label': item['label'],
+                'type': 'simple',
+                'checked': is_checked,
+                'comment': comment
+            })
 
     general_comment = request.POST.get('general_comment')
     name = request.POST.get('submitted_by_name')

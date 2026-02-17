@@ -14,4 +14,4 @@ tzdata  # Essential for timezone support on Windows
 # psycopg2-binary>=2.9
 
 # --- Utilities ---
-requests>=2.31.0
+requests>=2.31.0matplotlib

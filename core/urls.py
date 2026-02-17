@@ -12,10 +12,10 @@ from core.views import (
     delete_setting_item, delete_staff_note, delete_staff_warning, send_weekly_report_view,
     # SCHEDULER
     scheduler_dashboard_view, htmx_add_schedule_slot, htmx_move_schedule_slot, htmx_delete_schedule_slot,
-    scheduler_approval_landing, scheduler_finalize_approval, scheduler_history_view,
+    scheduler_approval_landing, scheduler_finalize_approval, scheduler_history_view, scheduler_generate_pdf_view,
     # CHECK FORMS
     checkform_admin_view, checkform_builder_view, checkform_share_view,
-    checkform_external_view, checkform_submit_view
+    checkform_external_view, checkform_submit_view, export_staff_pdf_view
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,6 +36,7 @@ urlpatterns = [
     
     path('staff/', staff_index_view, name='staff_index'),
     path('staff/<int:staff_id>/', staff_detail_view, name='staff_detail'),
+    path('staff/pdf/<int:staff_id>/', export_staff_pdf_view, name='export_staff_pdf'), # Updated Feature 3
     path('report/send-weekly/', send_weekly_report_view, name='send_weekly_report'),
 
     # HTMX ACTIONS
@@ -56,6 +57,7 @@ urlpatterns = [
     path('scheduler/approval/<int:log_id>/<str:action>/', scheduler_approval_landing, name='scheduler_approval_landing'),
     path('scheduler/finalize/<int:log_id>/', scheduler_finalize_approval, name='scheduler_finalize_approval'),
     path('scheduler/history/', scheduler_history_view, name='scheduler_history'),
+    path('scheduler/export/pdf/<str:date_str>/', scheduler_generate_pdf_view, name='scheduler_export_pdf'), # Feature 1
 
     # CHECK FORMS
     path('checkforms/', checkform_admin_view, name='checkform_admin'),

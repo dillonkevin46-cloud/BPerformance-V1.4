@@ -11,7 +11,8 @@ tzdata  # Essential for timezone support on Windows
 
 # --- Database (PostgreSQL) ---
 # Uncomment the line below if you switch from SQLite to PostgreSQL in production
-# psycopg2-binary>=2.9
+psycopg2-binary>=2.9
 
 # --- Utilities ---
 requests>=2.31.0
+matplotlib

@@ -9,6 +9,9 @@
              <input type="date" name="date" class="form-control form-control-sm d-inline-block w-auto" value="{{ current_date|date:'Y-m-d' }}" onchange="this.form.submit()">
          </form>
          <a href="?date={% now 'Y-m-d' %}" class="btn btn-outline-secondary btn-sm">Today</a>
+         <a href="{% url 'scheduler_export_pdf' current_date|date:'Y-m-d' %}" class="btn btn-danger btn-sm text-white" target="_blank">
+            <i class="bi bi-file-pdf"></i> Export Daily Log
+         </a>
          <a href="{% url 'scheduler_history' %}" class="btn btn-info btn-sm text-white position-relative">
             History
             {% if changes_count > 0 %}
@@ -29,10 +32,10 @@
                 {{ staff.full_name }}
             </div>
             <div class="card-body p-2" style="min-height: 400px;">
-
+                
                 <!-- Add Button -->
-                <button class="btn btn-sm btn-outline-primary w-100 mb-3 dashed-border"
-                        data-bs-toggle="modal"
+                <button class="btn btn-sm btn-outline-primary w-100 mb-3 dashed-border" 
+                        data-bs-toggle="modal" 
                         data-bs-target="#addSlotModal"
                         onclick="prepareAddModal('{{ staff.id }}', '{{ staff.full_name }}')">
                     <i class="bi bi-plus-circle"></i> Add Slot
@@ -42,9 +45,9 @@
                 {% for slot in slots %}
                     {% if slot.staff == staff %}
                     <div class="card mb-2 border-start border-4 shadow-sm slot-card
-                        {% if slot.status == 'PENDING' %}border-warning bg-warning-subtle{% elif slot.status == 'REJECTED' %}border-danger bg-danger-subtle{% else %}border-success bg-white{% endif %}"
+                        {% if slot.status == 'PENDING' %}border-warning bg-warning-subtle{% elif slot.status == 'REJECTED' %}border-danger bg-danger-subtle{% elif slot.status == 'PENDING_DELETE' %}border-danger bg-secondary text-white{% else %}border-success bg-white{% endif %}"
                          style="cursor: pointer;"
-                         data-bs-toggle="modal"
+                         data-bs-toggle="modal" 
                          data-bs-target="#editSlotModal"
                          onclick="prepareEditModal('{{ slot.id }}', '{{ slot.start_time|date:'Y-m-d\\TH:i' }}', '{{ slot.end_time|date:'Y-m-d\\TH:i' }}', '{{ slot.location }}', '{{ slot.description|escapejs }}')">
                         <div class="card-body p-2">
@@ -52,6 +55,7 @@
                                 <small class="fw-bold">{{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}</small>
                                 {% if slot.status == 'PENDING' %}<i class="bi bi-hourglass-split text-warning" title="Pending Approval"></i>{% endif %}
                                 {% if slot.status == 'REJECTED' %}<i class="bi bi-x-circle text-danger" title="Rejected"></i>{% endif %}
+                                {% if slot.status == 'PENDING_DELETE' %}<i class="bi bi-trash text-white" title="Pending Deletion"></i>{% endif %}
                             </div>
                             <div class="small text-truncate">{{ slot.location }}</div>
                             <div class="small text-muted text-truncate">{{ slot.description }}</div>
@@ -116,7 +120,7 @@
                 <p class="text-muted small">Any changes will require approval.</p>
                 <div class="mb-3">
                     <label class="form-label">Location / Client</label>
-                    <input type="text" name="location" id="edit_location" class="form-control" readonly>
+                    <input type="text" name="location" id="edit_location" class="form-control" readonly> 
                 </div>
                 <div class="row g-2 mb-3">
                     <div class="col">
@@ -155,7 +159,7 @@
         document.getElementById('editSlotForm').action = "/scheduler/move/" + slotId + "/";
         // Store slotId in a data attribute for delete
         document.getElementById('editSlotForm').dataset.slotId = slotId;
-
+        
         document.getElementById('edit_start').value = start;
         document.getElementById('edit_end').value = end;
         document.getElementById('edit_location').value = loc;

@@ -149,15 +149,15 @@
             <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-clock-history"></i> Ticket History</span>
                 <div class="d-flex gap-2">
-                     <input type="text" class="form-control form-control-sm" name="search" placeholder="Search (ID or Desc)"
-                            hx-get="{% url 'htmx_staff_tickets' staff.id %}"
-                            hx-trigger="keyup changed delay:500ms, search"
-                            hx-target="#ticket-body"
+                     <input type="text" class="form-control form-control-sm" name="search" placeholder="Search (ID or Desc)" 
+                            hx-get="{% url 'htmx_staff_tickets' staff.id %}" 
+                            hx-trigger="keyup changed delay:500ms, search" 
+                            hx-target="#ticket-body" 
                             hx-include="[name='status'], [name='sort']">
-
+                            
                      <select class="form-select form-select-sm" name="status" style="width: 150px;"
-                            hx-get="{% url 'htmx_staff_tickets' staff.id %}"
-                            hx-trigger="change"
+                            hx-get="{% url 'htmx_staff_tickets' staff.id %}" 
+                            hx-trigger="change" 
                             hx-target="#ticket-body"
                             hx-include="[name='search'], [name='sort']">
                         <option value="">All Statuses</option>
@@ -169,10 +169,10 @@
                         <option value="WAIT_ST">Await Staff</option>
                         <option value="WAIT_CL">Await Client</option>
                      </select>
-
+                     
                      <select class="form-select form-select-sm" name="sort" style="width: 150px;"
-                            hx-get="{% url 'htmx_staff_tickets' staff.id %}"
-                            hx-trigger="change"
+                            hx-get="{% url 'htmx_staff_tickets' staff.id %}" 
+                            hx-trigger="change" 
                             hx-target="#ticket-body"
                             hx-include="[name='search'], [name='status']">
                         <option value="newest">Newest First</option>

@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'BPerformance.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'BPerformanceDB',  # The DB name you created in Step 1
+        'NAME': 'bperformance_db',  # The DB name you created in Step 1
         'USER': 'postgres',         # Default postgres user
         'PASSWORD': 'Mortal@75',     # CHANGE THIS to the password you set in Step 1
         'HOST': 'localhost',
@@ -110,15 +110,16 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
-# BPerformance/settings.py
+# OPTION 1: For Testing (Prints email to your terminal window)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dillonkevin46@gmail.com'
-EMAIL_HOST_PASSWORD = 'wotl akgk xgil lmwy'  # <-- PASTE YOUR 16-CHAR APP PASSWORD HERE
-APPROVER_EMAIL = 'dillonkevin46@gmail.com'
+# OPTION 2: For Production (Uncomment and fill this when ready for real emails)
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'  # or smtp.gmail.com
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'dillonkevin46@gmail.com'
+# EMAIL_HOST_PASSWORD = 'wotl akgk xgil lmwy'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,82 +1,76 @@
-<!DOCTYPE html>
 <html>
 <head>
     <style>
-        @page { size: A4; margin: 1cm; }
         body { font-family: sans-serif; color: #333; }
-        .header { text-align: center; border-bottom: 2px solid #4facfe; padding-bottom: 20px; margin-bottom: 20px; }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
-        .stats-grid { display: table; width: 100%; margin-bottom: 30px; }
-        .stat-box { display: table-cell; width: 25%; text-align: center; padding: 10px; border: 1px solid #eee; background: #f8f9fa; }
-        .stat-value { font-size: 18pt; font-weight: bold; color: #2c3e50; }
-        .stat-label { font-size: 9pt; color: #7f8c8d; text-transform: uppercase; }
-        
-        table { width: 100%; border-collapse: collapse; font-size: 9pt; }
-        th { background: #4facfe; color: white; padding: 8px; text-align: left; }
-        td { border-bottom: 1px solid #ddd; padding: 8px; }
-        .badge { padding: 2px 5px; border-radius: 3px; color: white; font-size: 8pt; }
-        
-        .bg-COMP { background: #2ecc71; }
-        .bg-BLOCK { background: #e74c3c; }
-        .bg-PEND { background: #f1c40f; color: black; }
-        .bg-WAIT { background: #3498db; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .stats-box { border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; display: inline-block; width: 45%; vertical-align: top; }
+        .stats-title { font-weight: bold; color: #555; text-transform: uppercase; font-size: 0.8rem; }
+        .stats-value { font-size: 1.5rem; font-weight: bold; color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .badge { padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; color: white; background-color: #7f8c8d; }
+        .badge-COMP { background-color: #2ecc71; }
+        .badge-BLOCK { background-color: #e74c3c; }
+        .badge-PEND { background-color: #f1c40f; color: black; }
+        .badge-CALL { background-color: #e67e22; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Staff Performance Report</h1>
-        <h2>{{ staff.full_name }}</h2>
-        <p>{{ staff.department.name }} | Period: {{ start_date|date:"d M Y" }} - {{ end_date|date:"d M Y" }}</p>
+        <h3>{{ staff.full_name }}</h3>
+        <p>{{ start_date }} to {{ end_date }}</p>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-box">
-            <div class="stat-value">{{ total_tickets }}</div>
-            <div class="stat-label">Total Tickets</div>
+    <!-- FEATURE 3: Embedded Graph -->
+    {% if graph %}
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="data:image/png;base64,{{ graph }}" style="max-width: 100%; height: auto; border: 1px solid #eee;">
+    </div>
+    {% endif %}
+
+    <div>
+        <div class="stats-box">
+            <div class="stats-title">Total Tickets</div>
+            <div class="stats-value">{{ total_tickets }}</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-value">{{ unique_clients }}</div>
-            <div class="stat-label">Clients Assisted</div>
+        <div class="stats-box">
+            <div class="stats-title">Unique Clients</div>
+            <div class="stats-value">{{ unique_clients }}</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-value">{{ avg_resolution }}</div>
-            <div class="stat-label">Avg Resolution</div>
+        <div class="stats-box">
+            <div class="stats-title">Avg Resolution</div>
+            <div class="stats-value">{{ avg_resolution }}</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-value">{{ avg_response }}</div>
-            <div class="stat-label">Avg Response</div>
+        <div class="stats-box">
+            <div class="stats-title">Avg Response</div>
+            <div class="stats-value">{{ avg_response }}</div>
         </div>
     </div>
 
-    <h3>Ticket History</h3>
+    <h4>Ticket History</h4>
     <table>
         <thead>
             <tr>
-                <th width="15%">Date</th>
-                <th width="15%">Client</th>
-                <th width="10%">Type</th>
-                <th width="40%">Description</th>
-                <th width="10%">Duration</th>
-                <th width="10%">Status</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Type</th>
+                <th>Time</th>
+                <th>Duration</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             {% for t in tickets %}
             <tr>
-                <td>{{ t.report.date|date:"d M Y" }}</td>
+                <td>{{ t.report.date }}</td>
                 <td>{{ t.client.name }}</td>
                 <td>{{ t.get_work_type_display }}</td>
-                <td>{{ t.description|truncatechars:100 }}</td>
+                <td>{{ t.start_time|time:"H:i" }} - {{ t.end_time|time:"H:i" }}</td>
                 <td>{{ t.duration_display }}</td>
-                <td>
-                    {% if t.status == 'COMP' %}<span class="badge bg-COMP">COMP</span>
-                    {% elif t.status == 'BLOCK' %}<span class="badge bg-BLOCK">BLOCK</span>
-                    {% elif t.status == 'PEND' %}<span class="badge bg-PEND">PEND</span>
-                    {% else %}<span class="badge bg-WAIT">{{ t.status }}</span>{% endif %}
-                </td>
+                <td><span class="badge badge-{{ t.status }}">{{ t.get_status_display }}</span></td>
             </tr>
-            {% empty %}
-            <tr><td colspan="6" style="text-align: center;">No tickets found for this period.</td></tr>
             {% endfor %}
         </tbody>
     </table>

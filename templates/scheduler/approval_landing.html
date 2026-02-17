@@ -13,7 +13,7 @@
                 <li>Time: {{ log.slot.start_time }} - {{ log.slot.end_time }}</li>
                 <li>Location: {{ log.slot.location }}</li>
             </ul>
-
+            
             <form method="POST" action="{% url 'scheduler_finalize_approval' log.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="{{ action }}">

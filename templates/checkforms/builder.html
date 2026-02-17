@@ -21,14 +21,14 @@
                             <label class="form-check-label">Include General Comment Area</label>
                         </div>
                     </div>
-
+                    
                     <hr>
                     <h6>Checklist Items</h6>
                     <div id="items-container"></div>
                     <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addItem()">+ Add Item</button>
-
+                    
                     <input type="hidden" name="items_json" id="items_json">
-
+                    
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" onclick="submitForm()">Save Template</button>
                     </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="col-md-8">
         <h3>Existing Templates</h3>
         <ul class="list-group">
@@ -58,12 +58,12 @@
         items.push({label: "", required: false});
         renderItems();
     }
-
+    
     function removeItem(index) {
         items.splice(index, 1);
         renderItems();
     }
-
+    
     function updateItem(index, key, value) {
         items[index][key] = value;
     }
@@ -81,7 +81,7 @@
             container.appendChild(div);
         });
     }
-
+    
     function submitForm() {
         document.getElementById('items_json').value = JSON.stringify(items);
     }

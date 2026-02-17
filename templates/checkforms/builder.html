@@ -1,31 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">Create Template</div>
+    <div class="col-md-5">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+            <div class="card-header bg-primary text-white">Create Template</div>
             <div class="card-body">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
-                        {{ form.title.label_tag }}
+                        <label class="form-label">Template Title</label>
                         {{ form.title }}
                     </div>
                     <div class="mb-3">
-                        {{ form.instructions.label_tag }}
+                        <label class="form-label">Instructions</label>
                         {{ form.instructions }}
                     </div>
                     <div class="mb-3">
-                        <div class="form-check">
-                            {{ form.has_general_comment }}
-                            <label class="form-check-label">Include General Comment Area</label>
-                        </div>
+                        <label class="form-label">Company Logo (Optional)</label>
+                        <input type="file" name="company_logo" class="form-control" accept="image/*">
+                    </div>
+                    <div class="mb-3 form-check">
+                        {{ form.has_general_comment }}
+                        <label class="form-check-label">Include General Comment Area</label>
                     </div>
 
                     <hr>
-                    <h6>Checklist Items</h6>
-                    <div id="items-container"></div>
-                    <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addItem()">+ Add Item</button>
+                    <h6 class="mb-3">Form Items</h6>
+                    <div id="items-container" class="mb-3"></div>
+
+                    <div class="d-flex gap-2 mb-4">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addItem('simple')">+ Simple Check</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addItem('check_note')">+ Check & Note</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addItem('fixed_table')">+ Data Table</button>
+                    </div>
 
                     <input type="hidden" name="items_json" id="items_json">
 
@@ -37,25 +44,39 @@
         </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-7">
         <h3>Existing Templates</h3>
-        <ul class="list-group">
+        <div class="list-group">
             {% for t in templates %}
-            <li class="list-group-item">
-                <strong>{{ t.title }}</strong>
-                <span class="badge bg-secondary float-end">{{ t.items|length }} items</span>
-                <p class="small text-muted mb-0">{{ t.instructions }}</p>
-            </li>
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ t.title }}</h5>
+                    <span class="badge bg-secondary">{{ t.items|length }} items</span>
+                </div>
+                <p class="mb-1 small text-muted">{{ t.instructions }}</p>
+                {% if t.company_logo %}
+                    <img src="{{ t.company_logo.url }}" style="height: 30px;" class="mt-2">
+                {% endif %}
+            </div>
+            {% empty %}
+            <p class="text-muted">No templates created yet.</p>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </div>
 
 <script>
     let items = [];
 
-    function addItem() {
-        items.push({label: "", required: false});
+    function addItem(type) {
+        let item = { type: type, label: "New Item", required: false };
+
+        if (type === 'fixed_table') {
+            item.columns = [{name: "Item", type: "text"}, {name: "Qty", type: "text"}, {name: "Count", type: "input"}];
+            item.rows = [["Widget A", "10", ""]];
+        }
+
+        items.push(item);
         renderItems();
     }
 
@@ -68,17 +89,82 @@
         items[index][key] = value;
     }
 
+    // TABLE HELPERS
+    function addTableColumn(index) {
+        items[index].columns.push({name: "New Col", type: "text"});
+        // Add empty cell to existing rows to match
+        items[index].rows.forEach(row => row.push(""));
+        renderItems();
+    }
+
+    function updateColumnName(itemIndex, colIndex, val) {
+        items[itemIndex].columns[colIndex].name = val;
+    }
+
+    function addTableRow(index) {
+        let newRow = new Array(items[index].columns.length).fill("");
+        items[index].rows.push(newRow);
+        renderItems();
+    }
+
+    function updateTableCell(itemIndex, rowIndex, colIndex, val) {
+        items[itemIndex].rows[rowIndex][colIndex] = val;
+    }
+
+    function removeTableRow(itemIndex, rowIndex) {
+        items[itemIndex].rows.splice(rowIndex, 1);
+        renderItems();
+    }
+
     function renderItems() {
         const container = document.getElementById('items-container');
         container.innerHTML = "";
+
         items.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = "input-group mb-2";
-            div.innerHTML = `
-                <input type="text" class="form-control" placeholder="Item Label" value="${item.label}" onchange="updateItem(${index}, 'label', this.value)">
-                <button type="button" class="btn btn-outline-danger" onclick="removeItem(${index})">X</button>
+            const card = document.createElement('div');
+            card.className = "card mb-3 border-light shadow-sm bg-light";
+
+            let content = `
+                <div class="card-body p-2">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="badge bg-info text-dark">${item.type.replace('_', ' ').toUpperCase()}</span>
+                        <button type="button" class="btn btn-xs btn-outline-danger border-0" onclick="removeItem(${index})"><i class="bi bi-trash"></i></button>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" class="form-control form-control-sm fw-bold" placeholder="Item Label / Question" value="${item.label}" onchange="updateItem(${index}, 'label', this.value)">
+                    </div>
             `;
-            container.appendChild(div);
+
+            if (item.type === 'fixed_table') {
+                content += `
+                    <div class="bg-white p-2 border rounded">
+                        <small class="fw-bold d-block mb-1">Columns:</small>
+                        <div class="d-flex gap-1 mb-2 overflow-auto">
+                            ${item.columns.map((col, cIdx) => `
+                                <input type="text" class="form-control form-control-sm" style="min-width: 80px;" value="${col.name}" onchange="updateColumnName(${index}, ${cIdx}, this.value)">
+                            `).join('')}
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="addTableColumn(${index})">+</button>
+                        </div>
+
+                        <small class="fw-bold d-block mb-1">Pre-filled Data Rows:</small>
+                        <div style="max-height: 150px; overflow-y: auto;">
+                            ${item.rows.map((row, rIdx) => `
+                                <div class="d-flex gap-1 mb-1">
+                                    ${row.map((cell, cellIdx) => `
+                                        <input type="text" class="form-control form-control-sm" value="${cell}" onchange="updateTableCell(${index}, ${rIdx}, ${cellIdx}, this.value)" placeholder="...">
+                                    `).join('')}
+                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeTableRow(${index}, ${rIdx})">x</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link text-decoration-none p-0 mt-1" onclick="addTableRow(${index})">+ Add Row</button>
+                    </div>
+                `;
+            }
+
+            content += `</div>`;
+            card.innerHTML = content;
+            container.appendChild(card);
         });
     }
 

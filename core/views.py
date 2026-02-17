@@ -923,11 +923,12 @@ def checkform_admin_view(request):
     if request.method == 'POST' and 'file_submission' in request.POST:
         sub_id = request.POST.get('submission_id')
         folder_id = request.POST.get('folder_id')
-        sub = get_object_or_404(CheckFormSubmission, id=sub_id)
-        folder = get_object_or_404(CheckFormFolder, id=folder_id)
-        sub.folder = folder
-        sub.status = 'FILED'
-        sub.save()
+        if sub_id and folder_id:
+            sub = get_object_or_404(CheckFormSubmission, id=sub_id)
+            folder = get_object_or_404(CheckFormFolder, id=folder_id)
+            sub.folder = folder
+            sub.status = 'FILED'
+            sub.save()
         return redirect('checkform_admin')
 
     # Create Folder Logic
